@@ -1,15 +1,13 @@
 /*=============================================================================
  * Authors: Carlos Maffrand 	<carlosmaffrand5@gmail.com>
- *			Hernan Gomez Molino	<hernangomezmolino@gmail.com>
- * Date: 2021/07/30
+ * Date: 2021/08/08
  *===========================================================================*/
 
 /*=====[Inclusions of function dependencies]=================================*/
 
-#include "PdM-Practico3.h"
+#include "main.h"
 #include "sapi.h"
 #include "teclas.h"
-#include "semaforo.h"
 
 /*=====[Definition macros of private constants]==============================*/
 
@@ -38,7 +36,10 @@ int main(void)
 	dbn_t *ptecla3 = &tecla3;
 	dbn_t *ptecla4 = &tecla4;
 
-	initSemaforoModeMEF();
+	// Variable de numeros
+	uint64_t 	number = 0;
+	mtd_t		metodo = BRUTE_FORCE_METHOD;
+
 
 	// ----- Repeat for ever -------------------------
 	while (true)
@@ -46,22 +47,24 @@ int main(void)
 		// Polling de botones.
 		if (leerTecla(ptecla1) == OFF)
 		{
-		// Poner funcionalidad de tecla 1.
+			number = 1;
+			processBF(number,metodo);
 		}
 		if (leerTecla(ptecla2) == OFF)
 		{
-			semaforoModeMEF(MODE_UP);
+			number = 27;
+			processBF(number,metodo);
 		}
 		if (leerTecla(ptecla3) == OFF)
 		{
-			semaforoModeMEF(MODE_DOWN);
+			number = 29;
+			processBF(number,metodo);
 		}
 		if (leerTecla(ptecla4) == OFF)
 		{
-		// Poner funcionalidad de tecla 4.
+			number = 10007;
+			processBF(number,metodo);
 		}
-		// Lammado a la MEF de manejo de estados del semaforo
-		semaforoStateMEF();
 	}
 
 	return 0;
