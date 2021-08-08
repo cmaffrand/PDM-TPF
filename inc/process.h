@@ -34,7 +34,7 @@ extern "C"
 
     /*=====[Prototypes (declarations) of public functions]=======================*/
 
-    bool_t proccesFB(uint64_t number, mtd_t metodo);
+    bool_t proccesBF(uint64_t number, mtd_t metodo);
 
     /*=====[Prototypes (declarations) of public interrupt functions]=============*/
 

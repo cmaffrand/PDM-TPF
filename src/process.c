@@ -13,7 +13,7 @@
 * 							-> FALSE 
 *=============================================================================*/
 
-bool_t proccesFB(uint64_t number, mtd_t metodo)
+bool_t proccesBF(uint64_t number, mtd_t metodo)
 {
    bool_t ret_val = 1;
 
