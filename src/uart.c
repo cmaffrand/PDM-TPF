@@ -16,7 +16,7 @@
 * semaforo y las teclas.
 *=============================================================================*/
 
-void displaySemaforo(void)
+/*void displaySemaforo(void)
 {
 	char mensajeModo[20];
 	char mensajeEstado[20];
@@ -147,4 +147,4 @@ void displaySemaforo(void)
 	printf("Tecla %d: %s\r\n",tecla3.tecla - 35,mensajeEstadoTecla3);
 	printf("Tecla %d: %s\r\n",tecla4.tecla - 35,mensajeEstadoTecla4);
 
-}
+}*/

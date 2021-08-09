@@ -6,7 +6,6 @@
 
 #include "sapi.h"
 #include "teclas.h"
-#include "uart.h"
 
 /*=====[Definitions of public global variables]==============================*/
 
@@ -20,12 +19,12 @@
 bool_t leerTecla(dbn_t *ptecla)
 {
 	bool_t ret_val;
-	static bool_t MEF_Init = TRUE;
+	static bool_t MEF_Init[] = {TRUE,TRUE,TRUE,TRUE};
 
-	if (MEF_Init)
+	if (MEF_Init[ptecla->tecla-36])
 	{
 		inicializarMEF(ptecla);
-		MEF_Init = FALSE;
+		MEF_Init[ptecla->tecla-36] = FALSE;
 	}
 
 	// Validacion de teclas presentes en la placa EDU CIAA.
@@ -123,7 +122,7 @@ bool_t actualizarMEF(dbn_t *ptecla)
 * *=============================================================================*/
 void buttonPressed(gpioMap_t tecla)
 {
-	displaySemaforo();
+	printf("TEC%d Presionada\r\n",tecla-35);
 }
 
 /*=============================================================================
@@ -133,5 +132,5 @@ void buttonPressed(gpioMap_t tecla)
 * *=============================================================================*/
 void buttonReleased(gpioMap_t tecla)
 {
-	displaySemaforo();
+	printf("TEC%d Soltada\r\n",tecla-35);
 }
