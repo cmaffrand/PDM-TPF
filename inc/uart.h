@@ -13,6 +13,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include "process.h"
 
 /*=====[C++ - begin]=========================================================*/
 
@@ -29,7 +30,11 @@ extern "C"
 
 /*=====[Prototypes (declarations) of public functions]=======================*/
 
-void displaySemaforo(void);
+void displayHome(void);
+void displayMethod(void);
+void displayProcess(void);
+void displayResult(bool_t result, uint64_t number, mtd_t metodo, uint64_t time);
+void displayNumber(void);
 
 /*=====[Prototypes (declarations) of public interrupt functions]=============*/
 

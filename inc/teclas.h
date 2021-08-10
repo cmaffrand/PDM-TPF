@@ -44,6 +44,13 @@ extern "C"
 		estadoMEF_t estado;
 	} dbn_t;
 
+	dbn_t tecla1,tecla2,tecla3,tecla4;
+
+	dbn_t *ptecla1;
+	dbn_t *ptecla2;
+	dbn_t *ptecla3;
+	dbn_t *ptecla4;
+
 	/*=====[Prototypes (declarations) of public functions]=======================*/
 
 	bool_t leerTecla(dbn_t *ptecla);

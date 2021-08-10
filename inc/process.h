@@ -36,6 +36,10 @@ typedef enum
 	SIEVE_OF_EULER_METHOD
 } mtd_t;
 
+mtd_t		selectedMethod;
+uint64_t 	selectedNumber,processTime;
+uint64_t   	*pprocessTime;
+
 /*=====[Prototypes (declarations) of public functions]=======================*/
 
 bool_t processBF(uint64_t number, mtd_t metodo, uint64_t * time);

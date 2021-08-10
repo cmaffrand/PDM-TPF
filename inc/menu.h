@@ -1,13 +1,12 @@
 /*=============================================================================
  * Authors: Carlos Maffrand 	<carlosmaffrand5@gmail.com>
- *			Hernan Gomez Molino	<hernangomezmolino@gmail.com>
- * Date: 2021/07/30
+ * Date: 2021/08/09
  *===========================================================================*/
 
 /*=====[Avoid multiple inclusion - begin]====================================*/
 
-#ifndef __SEMAFORO_H__
-#define __SEMAFORO_H__
+#ifndef __MENU_H__
+#define __MENU_H__
 
 /*=====[Inclusions of public function dependencies]==========================*/
 
@@ -23,16 +22,8 @@ extern "C"
 
 	/*=====[Definition macros of public constants]===============================*/
 
-#define MODE_UP 1
-#define MODE_DOWN 0
-#define DELAY_ROJO_NORMAL 3000
-#define DELAY_ROJOAMA_NORMAL 500
-#define DELAY_VERDE_NORMAL 1000
-#define DELAY_AMARILLO_NORMAL 500
-#define DELAY_AMARILLO_DESC 500
-#define DELAY_OFF_DESC 500
-#define DELAY_ROJO_ALARMA 1000
-#define DELAY_OFF_ALARMA 1000
+	uint8_t	dataRead,i,p;
+	bool_t 	newData,newResult;
 
 	/*=====[Public function-like macros]=========================================*/
 
@@ -40,30 +31,19 @@ extern "C"
 
 	typedef enum
 	{
-		RED_STATE,
-		REDYELLOW_STATE,
-		GREEN_STATE,
-		YELLOW_STATE,
-		OFF_STATE
-	} estadoSem_t;
+		HOME_STATE,
+		PROCESS_STATE,
+		METHOD_STATE,
+		NUMBER_STATE,
+		RESULT_STATE
+	} estadoMenu_t;
 
-	estadoSem_t semaforoState;
-
-	typedef enum
-	{
-		NORMAL_MODE,
-		DISCONNECTED_MODE,
-		ALARM_MODE
-	} modoSem_t;
-
-	modoSem_t semaforoMode;
+	estadoMenu_t menuState;
 
 	/*=====[Prototypes (declarations) of public functions]=======================*/
 
-	void initSemaforoModeMEF(void);
-	void semaforoModeMEF(bool_t updown);
-	void initSemaforoStateMEF(void);
-	void semaforoStateMEF(void);
+	void initMenuMEF(void);
+	void MenuMEF(void);
 
 	/*=====[Prototypes (declarations) of public interrupt functions]=============*/
 
@@ -75,4 +55,4 @@ extern "C"
 
 /*=====[Avoid multiple inclusion - end]======================================*/
 
-#endif /* __SEMAFORO_H__ */
+#endif /* __MENU_H__ */
