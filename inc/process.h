@@ -36,13 +36,24 @@ typedef enum
 	SIEVE_OF_EULER_METHOD
 } mtd_t;
 
-mtd_t		selectedMethod;
-uint64_t 	selectedNumber,processTime;
-uint64_t   	*pprocessTime;
+typedef struct
+{ // estructura para controlar el antirrebote de un tecla
+	uint64_t 	number;
+	uint64_t 	time;
+	mtd_t 		method;
+	uint64_t	memory;
+	bool_t		result;
+} primepro_t;
 
 /*=====[Prototypes (declarations) of public functions]=======================*/
 
-bool_t processBF(uint64_t number, mtd_t metodo, uint64_t * time);
+bool_t process(primepro_t *primeProcess);
+static bool_t MetohdBF(primepro_t *primeProcess);
+static bool_t MetohdPL(primepro_t *primeProcess);
+static bool_t MetohdSQRT(primepro_t *primeProcess);
+static bool_t Metohd6KPLUS1(primepro_t *primeProcess);
+static bool_t MetohdERATO(primepro_t *primeProcess);
+static bool_t MetohdEuler(primepro_t *primeProcess);
 
 /*=====[Prototypes (declarations) of public interrupt functions]=============*/
 

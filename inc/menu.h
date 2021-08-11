@@ -12,6 +12,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include "process.h"
 
 /*=====[C++ - begin]=========================================================*/
 
@@ -21,9 +22,6 @@ extern "C"
 #endif
 
 	/*=====[Definition macros of public constants]===============================*/
-
-	uint8_t	dataRead,i,p;
-	bool_t 	newData,newResult;
 
 	/*=====[Public function-like macros]=========================================*/
 
@@ -42,8 +40,8 @@ extern "C"
 
 	/*=====[Prototypes (declarations) of public functions]=======================*/
 
-	void initMenuMEF(void);
-	void MenuMEF(void);
+	void initMenuMEF(primepro_t *primeProcess);
+	void MenuMEF(primepro_t *primeProcess);
 
 	/*=====[Prototypes (declarations) of public interrupt functions]=============*/
 

@@ -19,8 +19,11 @@
 * Funcion: MenuMEF -> Maquina de estado finito que maneja el menu.
 *=============================================================================*/
 
-void MenuMEF(void)
+void MenuMEF(primepro_t *primeProcess)
 {
+	static uint8_t	dataRead,i 	= 0;
+	static bool_t 	newData 	= FALSE;
+
 	switch (menuState)
     {
     case HOME_STATE:
@@ -33,13 +36,13 @@ void MenuMEF(void)
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 2)) || (leerTecla(ptecla2) == OFF)){
 	    	menuState = NUMBER_STATE;
-	    	selectedNumber = 0;
+	    	primeProcess -> number = 0;
 	    	displayNumber();
 	    	newData = FALSE;
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 3)) || (leerTecla(ptecla3) == OFF)){
 			menuState = RESULT_STATE;
-			displayResult(newResult,selectedNumber,selectedMethod,processTime);
+			displayResult(primeProcess);
 			newData = FALSE;
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 4)) || (leerTecla(ptecla4) == OFF)){
@@ -53,33 +56,33 @@ void MenuMEF(void)
 	    }
         break;
     case PROCESS_STATE:
-    	newResult = processBF(selectedNumber,selectedMethod,pprocessTime);
+    	process(primeProcess);
     	menuState = RESULT_STATE;
-    	displayResult(newResult,selectedNumber,selectedMethod,processTime);
+		displayResult(primeProcess);
 	    uartRxFlush(UART_USB);
         break;
     case METHOD_STATE:
 		if (uartReadByte( UART_USB, &dataRead)) {
-			if 		(dataRead-48 == 1) selectedMethod 	= BRUTE_FORCE_METHOD;
-			else if (dataRead-48 == 2) selectedMethod 	= PAIR_LESS_METHOD;
-			else if (dataRead-48 == 3) selectedMethod 	= SQRT_METHOD;
-			else if (dataRead-48 == 4) selectedMethod 	= SQRT_6KPLUS1_METHOD;
-			else if (dataRead-48 == 5) selectedMethod 	= SIEVE_OF_ERATOSTHENES_METHOD;
-			else if (dataRead-48 == 6) selectedMethod 	= SIEVE_OF_EULER_METHOD;
+			if 		(dataRead-48 == 1) primeProcess -> method 	= BRUTE_FORCE_METHOD;
+			else if (dataRead-48 == 2) primeProcess -> method 	= PAIR_LESS_METHOD;
+			else if (dataRead-48 == 3) primeProcess -> method 	= SQRT_METHOD;
+			else if (dataRead-48 == 4) primeProcess -> method 	= SQRT_6KPLUS1_METHOD;
+			else if (dataRead-48 == 5) primeProcess -> method 	= SIEVE_OF_ERATOSTHENES_METHOD;
+			else if (dataRead-48 == 6) primeProcess -> method 	= SIEVE_OF_EULER_METHOD;
 			menuState 	= HOME_STATE;
-			displayHome();
+			displayHome(primeProcess);
 		}
     	break;
     case NUMBER_STATE:
     	newData = uartReadByte( UART_USB, &dataRead);
     	if (newData == TRUE) {
     		if ((dataRead >= 48) && (dataRead <= 57)){
-				selectedNumber = selectedNumber*10+dataRead-48;
+    			primeProcess -> number = (primeProcess -> number)*10+dataRead-48;
 				uartWriteByte( UART_USB, dataRead );
 			}
 			else {
 				menuState 	= HOME_STATE;
-				displayHome();
+				displayHome(primeProcess);
 			}
     		newData = FALSE;
     	}
@@ -89,13 +92,13 @@ void MenuMEF(void)
     	newData = uartReadByte( UART_USB, &dataRead);
     	if (newData == TRUE) {
     		menuState = HOME_STATE;
-    		displayHome();
+    		displayHome(primeProcess);
     		newData = FALSE;
     	}
         break;
     default:
     	menuState = HOME_STATE;
-		displayHome();
+		displayHome(primeProcess);
 		newData = FALSE;
         break;
     }
@@ -105,14 +108,9 @@ void MenuMEF(void)
 * Funcion: initMenuMEF -> Inicializa el Menu en el Home
 *=============================================================================*/
 
-void initMenuMEF(void)
+void initMenuMEF(primepro_t *primeProcess)
 {
-	dataRead  	= 0;
-	newResult	= FALSE;
-	newData 	= FALSE;
 	menuState 	= HOME_STATE;
-	i			= 0;
-	p			= 0;
 
 	//Inicializacion de estructuras de teclas
 	tecla1.tecla = TEC1;
@@ -126,10 +124,11 @@ void initMenuMEF(void)
 	ptecla3 = &tecla3;
 	ptecla4 = &tecla4;
 
-	selectedNumber = 0;
-	selectedMethod = BRUTE_FORCE_METHOD;
-	processTime = 0;
-	pprocessTime = &processTime;
+	primeProcess -> number = 0;
+	primeProcess -> method = BRUTE_FORCE_METHOD;
+	primeProcess -> time = 0;
+	primeProcess -> result = 0;
+	primeProcess -> memory = 0;
 
-    displayHome();
+    displayHome(primeProcess);
 }
