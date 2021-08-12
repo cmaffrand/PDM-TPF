@@ -122,7 +122,8 @@ bool_t actualizarMEF(dbn_t *ptecla)
 * *=============================================================================*/
 void buttonPressed(gpioMap_t tecla)
 {
-	printf("TEC%d Presionada\r\n",tecla-35);
+	//Funcionaliades al presionar la tecla
+	//printf("TEC%d Presionada\r\n",tecla-35);
 }
 
 /*=============================================================================
@@ -132,5 +133,6 @@ void buttonPressed(gpioMap_t tecla)
 * *=============================================================================*/
 void buttonReleased(gpioMap_t tecla)
 {
-	printf("TEC%d Soltada\r\n",tecla-35);
+	//Funcionalidades al soltar la tecla.
+	//printf("TEC%d Soltada\r\n",tecla-35);
 }

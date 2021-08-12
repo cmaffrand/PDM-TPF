@@ -22,6 +22,8 @@ extern "C"
 
 /*=====[Definition macros of public constants]===============================*/
 
+#define SEGMENT_SIZE 29500 // 20480 - 20k
+
 /*=====[Public function-like macros]=========================================*/
 
 /*=====[Definitions of public data types]====================================*/
@@ -33,27 +35,33 @@ typedef enum
 	SQRT_METHOD,
 	SQRT_6KPLUS1_METHOD,
 	SIEVE_OF_ERATOSTHENES_METHOD,
-	SIEVE_OF_EULER_METHOD
+	SIEVE_OF_EULER_METHOD,
+	SQRT_30K235_METHOD,
+	SQRT_210K2357_METHOD,
 } mtd_t;
 
 typedef struct
-{ // estructura para controlar el antirrebote de un tecla
+{ // estructura para controlar el proceso
 	uint64_t 	number;
 	uint64_t 	time;
 	mtd_t 		method;
 	uint64_t	memory;
+	bool_t		memoryOV;
 	bool_t		result;
+	uint64_t 	divider;
 } primepro_t;
 
 /*=====[Prototypes (declarations) of public functions]=======================*/
 
 bool_t process(primepro_t *primeProcess);
-static bool_t MetohdBF(primepro_t *primeProcess);
-static bool_t MetohdPL(primepro_t *primeProcess);
-static bool_t MetohdSQRT(primepro_t *primeProcess);
-static bool_t Metohd6KPLUS1(primepro_t *primeProcess);
-static bool_t MetohdERATO(primepro_t *primeProcess);
-static bool_t MetohdEuler(primepro_t *primeProcess);
+static bool_t MethodBF(primepro_t *primeProcess);
+static bool_t MethodPL(primepro_t *primeProcess);
+static bool_t MethodSQRT(primepro_t *primeProcess);
+static bool_t Method6KPLUS1(primepro_t *primeProcess);
+static bool_t MethodERATO(primepro_t *primeProcess);
+static bool_t MethodEuler(primepro_t *primeProcess);
+static bool_t Method30K(primepro_t *primeProcess);
+static bool_t Method210K (primepro_t *primeProcess);
 
 /*=====[Prototypes (declarations) of public interrupt functions]=============*/
 

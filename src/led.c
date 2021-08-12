@@ -7,6 +7,12 @@
 #include "sapi.h"
 #include "led.h"
 
+/*=====[Definitions of public global variables]==============================*/
+
+static delay_t ledNBD;
+
+/*=====[Definitions of functions]==============================*/
+
 /*=============================================================================
 * Funcion: encenderLed -> Utilizada para encender leds en la placa EDU CIAA.
 * Parametros de Entrada: gpioMap_t led, tipo de datos de sapi.h

@@ -19,47 +19,62 @@
 * Funcion: MenuMEF -> Maquina de estado finito que maneja el menu.
 *=============================================================================*/
 
-void MenuMEF(primepro_t *primeProcess)
+void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 {
 	static uint8_t	dataRead,i 	= 0;
 	static bool_t 	newData 	= FALSE;
 
-	switch (menuState)
+	switch (menu -> state)
     {
     case HOME_STATE:
     	// Si recibe un byte de la UART_USB lo guardarlo en la variable dato.
     	newData = uartReadByte( UART_USB, &dataRead);
 	    if (((newData == TRUE) && (dataRead-48 == 1)) || (leerTecla(ptecla1) == OFF)){
-	    	menuState = METHOD_STATE;
+	    	menu -> state = METHOD_STATE;
 	    	displayMethod();
 	    	newData = FALSE;
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 2)) || (leerTecla(ptecla2) == OFF)){
-	    	menuState = NUMBER_STATE;
+	    	menu -> state = NUMBER_STATE;
 	    	primeProcess -> number = 0;
 	    	displayNumber();
 	    	newData = FALSE;
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 3)) || (leerTecla(ptecla3) == OFF)){
-			menuState = RESULT_STATE;
+	    	menu -> state = RESULT_STATE;
 			displayResult(primeProcess);
 			newData = FALSE;
+			apagarLeds();
+			if (primeProcess -> result) encenderLed(LED3);
+			else encenderLed(LED2);
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 4)) || (leerTecla(ptecla4) == OFF)){
-			menuState = PROCESS_STATE;
+	    	menu -> state = PROCESS_STATE;
 			displayProcess();
 			newData = FALSE;
+			apagarLeds();
+			encenderLed(LED1);
 		}
 	    else{
-	    	menuState = HOME_STATE;
+	    	menu -> state = HOME_STATE;
 	    	newData = FALSE;
 	    }
         break;
     case PROCESS_STATE:
-    	process(primeProcess);
-    	menuState = RESULT_STATE;
-		displayResult(primeProcess);
-	    uartRxFlush(UART_USB);
+    	if (primeProcess -> number >= 2){
+    		process(primeProcess);
+			menu -> state = RESULT_STATE;
+			displayResult(primeProcess);
+			apagarLeds();
+			if (primeProcess -> result) encenderLed(LED3);
+			else encenderLed(LED2);
+			uartRxFlush(UART_USB);
+    	}
+    	else {
+    		menu -> state = NUMBER_STATE;
+			primeProcess -> number = 0;
+			displayNumber();
+    	}
         break;
     case METHOD_STATE:
 		if (uartReadByte( UART_USB, &dataRead)) {
@@ -69,7 +84,9 @@ void MenuMEF(primepro_t *primeProcess)
 			else if (dataRead-48 == 4) primeProcess -> method 	= SQRT_6KPLUS1_METHOD;
 			else if (dataRead-48 == 5) primeProcess -> method 	= SIEVE_OF_ERATOSTHENES_METHOD;
 			else if (dataRead-48 == 6) primeProcess -> method 	= SIEVE_OF_EULER_METHOD;
-			menuState 	= HOME_STATE;
+			else if (dataRead-48 == 7) primeProcess -> method 	= SQRT_30K235_METHOD;
+			else if (dataRead-48 == 8) primeProcess -> method 	= SQRT_210K2357_METHOD;
+			menu -> state = HOME_STATE;
 			displayHome(primeProcess);
 		}
     	break;
@@ -81,25 +98,46 @@ void MenuMEF(primepro_t *primeProcess)
 				uartWriteByte( UART_USB, dataRead );
 			}
 			else {
-				menuState 	= HOME_STATE;
+				menu -> state = HOME_STATE;
 				displayHome(primeProcess);
+				i = 0;
 			}
     		newData = FALSE;
+    		i++;
+    		if (i == 20){
+    			menu -> state = HOME_STATE;
+    			displayHome(primeProcess);
+    			i = 0;
+    		}
     	}
-
+    	if ((leerTecla(ptecla1) == OFF) || (leerTecla(ptecla2) == OFF) || (leerTecla(ptecla3) == OFF) || (leerTecla(ptecla4) == OFF)){
+    		menu -> state = HOME_STATE;
+			displayHome(primeProcess);
+			i = 0;
+    	}
         break;
     case RESULT_STATE:
     	newData = uartReadByte( UART_USB, &dataRead);
     	if (newData == TRUE) {
-    		menuState = HOME_STATE;
+    		menu -> state = HOME_STATE;
     		displayHome(primeProcess);
+    		apagarLeds();
+			encenderLed(LEDB);
     		newData = FALSE;
     	}
+    	if ((leerTecla(ptecla1) == OFF) || (leerTecla(ptecla2) == OFF) || (leerTecla(ptecla3) == OFF) || (leerTecla(ptecla4) == OFF)){
+    		menu -> state = HOME_STATE;
+			displayHome(primeProcess);
+			apagarLeds();
+			encenderLed(LEDB);
+		}
         break;
     default:
-    	menuState = HOME_STATE;
+    	menu -> state = HOME_STATE;
 		displayHome(primeProcess);
 		newData = FALSE;
+		apagarLeds();
+		encenderLed(LEDB);
         break;
     }
 }
@@ -108,9 +146,9 @@ void MenuMEF(primepro_t *primeProcess)
 * Funcion: initMenuMEF -> Inicializa el Menu en el Home
 *=============================================================================*/
 
-void initMenuMEF(primepro_t *primeProcess)
+void initMenuMEF(primepro_t *primeProcess, menu_t *menu)
 {
-	menuState 	= HOME_STATE;
+	menu -> state = HOME_STATE;
 
 	//Inicializacion de estructuras de teclas
 	tecla1.tecla = TEC1;
@@ -124,11 +162,16 @@ void initMenuMEF(primepro_t *primeProcess)
 	ptecla3 = &tecla3;
 	ptecla4 = &tecla4;
 
-	primeProcess -> number = 0;
-	primeProcess -> method = BRUTE_FORCE_METHOD;
-	primeProcess -> time = 0;
-	primeProcess -> result = 0;
-	primeProcess -> memory = 0;
+	primeProcess -> number 	= 0;
+	primeProcess -> method 	= BRUTE_FORCE_METHOD;
+	primeProcess -> time 	= 0;
+	primeProcess -> result 	= 0;
+	primeProcess -> memory 	= 0;
+	primeProcess -> divider	= 0;
+    primeProcess -> result = FALSE;
+    primeProcess -> memoryOV = FALSE;
 
     displayHome(primeProcess);
+    apagarLeds();
+	encenderLed(LEDB);
 }

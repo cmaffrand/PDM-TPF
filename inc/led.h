@@ -26,19 +26,46 @@ extern "C"
 // Se crea un valor de led nulo, para determinar que todos los leds tienen que
 // estar apagados.
 #define LED_OFF 46
+#define DELAY_ROJO_NORMAL 3000
+#define DELAY_ROJOAMA_NORMAL 500
+#define DELAY_VERDE_NORMAL 1000
+#define DELAY_AMARILLO_NORMAL 500
+#define DELAY_AMARILLO_DESC 500
+#define DELAY_OFF_DESC 500
+#define DELAY_ROJO_ALARMA 1000
+#define DELAY_OFF_ALARMA 1000
 
-    /*=====[Public function-like macros]=========================================*/
+/*=====[Public function-like macros]=========================================*/
 
-    /*=====[Definitions of public data types]====================================*/
+/*=====[Definitions of public data types]====================================*/
 
-    /*=====[Prototypes (declarations) of public functions]=======================*/
+typedef enum
+{
+	RED_STATE,
+	GREEN_STATE,
+	YELLOW_STATE,
+	OFF_STATE
+} ledState_t;
 
-    bool_t encenderLed(gpioMap_t led);
-    bool_t apagarLeds(void);
+ledState_t ledState;
 
-    /*=====[Prototypes (declarations) of public interrupt functions]=============*/
+typedef enum
+{
+	HOME_MODE,
+	RESULT_MODE,
+	PROCESS_MODE
+} ledMode_t;
 
-    /*=====[C++ - end]===========================================================*/
+ledMode_t ledMode;
+
+/*=====[Prototypes (declarations) of public functions]=======================*/
+
+bool_t encenderLed(gpioMap_t led);
+bool_t apagarLeds(void);
+
+/*=====[Prototypes (declarations) of public interrupt functions]=============*/
+
+/*=====[C++ - end]===========================================================*/
 
 #ifdef __cplusplus
 }
