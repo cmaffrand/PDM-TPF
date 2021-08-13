@@ -191,31 +191,38 @@ static bool_t MethodERATO(primepro_t *primeProcess){
     memset(prime, TRUE, sizeof(prime));
 
     DWT_CYCCNT = 0;
-    if (primeProcess -> number % 2 == 0) {
+    if ((primeProcess -> number == 2) || (primeProcess -> number == 3) || (primeProcess -> number == 5)) {
+    	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
+    }
+	else if (primeProcess -> number % 2 == 0) {
 		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
 		primeProcess -> divider = 2;
 		return primeProcess -> result;
 	}
-    //SIEVE
-	for (i = 3; i * i <= iterationLimit; i+=2){
-		if (prime[i/2-1] == TRUE){
-			for (j = i * i; j <= iterationLimit; j+=i*2)
-				prime[j/2-1] = FALSE;
-		}
-	}
-	// PRIMARITY_CHECK
-	for (i = 0; i <= iterationLimit; i++){
-		if (prime[i] == TRUE){
-			if (primeProcess -> number % (2*(i+1)+1) == 0) {
-				primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-				primeProcess -> divider = (2*(i+1)+1);
-				return primeProcess -> result;
+	else {
+		//SIEVE
+		for (i = 3; i * i <= iterationLimit; i+=2){
+			if (prime[i/2-1] == TRUE){
+				for (j = i * i; j <= iterationLimit; j+=i*2)
+					prime[j/2-1] = FALSE;
 			}
 		}
+		// PRIMARITY_CHECK
+		for (i = 0; i <= iterationLimit; i++){
+			if (prime[i] == TRUE){
+				if (primeProcess -> number % (2*(i+1)+1) == 0) {
+					primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+					primeProcess -> divider = (2*(i+1)+1);
+					return primeProcess -> result;
+				}
+			}
+		}
+		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
 	}
-	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-	primeProcess -> divider = primeProcess -> number;
-	return primeProcess -> result = TRUE;
 }
 
 static bool_t MethodEuler(primepro_t *primeProcess){
@@ -238,34 +245,41 @@ static bool_t MethodEuler(primepro_t *primeProcess){
 	memset(prime, TRUE, sizeof(prime));
 
 	DWT_CYCCNT = 0;
-	if (primeProcess -> number % 2 == 0) {
+	if (primeProcess -> number == 2) {
+	    	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+			primeProcess -> divider = primeProcess -> number;
+			return primeProcess -> result = TRUE;
+	    }
+	else if (primeProcess -> number % 2 == 0) {
 		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
 		primeProcess -> divider = 2;
 		return primeProcess -> result;
 	}
-	//SIEVE
-	for (p = 3; p <= iterationLimit; p += 2){
-		if (prime[p/2-1]){
-			max_q = (iterationLimit / p);
-			if (max_q % 2 == 0) max_q--;
-			for (q = max_q; q >= p; q -= 2){
-				if (prime[q/2-1]) prime[((p*q)/2-1)] = FALSE;
+	else {
+		//SIEVE
+		for (p = 3; p <= iterationLimit; p += 2){
+			if (prime[p/2-1]){
+				max_q = (iterationLimit / p);
+				if (max_q % 2 == 0) max_q--;
+				for (q = max_q; q >= p; q -= 2){
+					if (prime[q/2-1]) prime[((p*q)/2-1)] = FALSE;
+				}
 			}
 		}
-	}
-	//PRIMARY TEST
-	for (p = 3; p <= iterationLimit; p+=2){
-		if (prime[p/2-1] == TRUE){
-			if (primeProcess -> number % p == 0) {
-				primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-				primeProcess -> divider = p;
-				return primeProcess -> result;
+		//PRIMARY TEST
+		for (p = 3; p <= iterationLimit; p+=2){
+			if (prime[p/2-1] == TRUE){
+				if (primeProcess -> number % p == 0) {
+					primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+					primeProcess -> divider = p;
+					return primeProcess -> result;
+				}
 			}
 		}
+		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
 	}
-	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-	primeProcess -> divider = primeProcess -> number;
-	return primeProcess -> result = TRUE;
 }
 
 static bool_t Method30K (primepro_t *primeProcess){

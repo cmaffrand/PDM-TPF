@@ -5,7 +5,6 @@
  *===========================================================================*/
 
 #include "sapi.h"
-#include "teclas.h"
 #include "process.h"
 #include <string.h>
 #include <inttypes.h>

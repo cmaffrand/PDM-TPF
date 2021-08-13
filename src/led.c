@@ -53,10 +53,23 @@ bool_t apagarLeds(void)
 {
    bool_t ret_val = 1;
 
-   gpioWrite(LEDB, 0);
    gpioWrite(LED1, 0);
    gpioWrite(LED2, 0);
    gpioWrite(LED3, 0);
 
+   return ret_val;
+}
+
+bool_t RGBtoggle(void)
+{
+   bool_t ret_val = 1;
+   static uint8_t RGBState = 255;
+   uint8_t select = 0;
+
+   RGBState++;
+   select = RGBState % 8;
+   gpioWrite(LEDR, select % 2);
+   gpioWrite(LEDG, (select/2) % 2);
+   gpioWrite(LEDB, select / 4);
    return ret_val;
 }

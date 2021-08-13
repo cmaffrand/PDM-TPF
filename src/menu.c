@@ -4,11 +4,11 @@
  *===========================================================================*/
 
 #include "sapi.h"
+#include "menu.h"
 #include "led.h"
 #include "teclas.h"
 #include "process.h"
 #include "uart.h"
-#include "menu.h"
 #include <math.h>
 
 /*=====[Definitions of public global variables]==============================*/
@@ -33,12 +33,14 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 	    	menu -> state = METHOD_STATE;
 	    	displayMethod();
 	    	newData = FALSE;
+			RGBtoggle();
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 2)) || (leerTecla(ptecla2) == OFF)){
 	    	menu -> state = NUMBER_STATE;
 	    	primeProcess -> number = 0;
 	    	displayNumber();
 	    	newData = FALSE;
+			RGBtoggle();
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 3)) || (leerTecla(ptecla3) == OFF)){
 	    	menu -> state = RESULT_STATE;
@@ -47,6 +49,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			apagarLeds();
 			if (primeProcess -> result) encenderLed(LED3);
 			else encenderLed(LED2);
+			RGBtoggle();
 	    }
 	    else if (((newData == TRUE) && (dataRead-48 == 4)) || (leerTecla(ptecla4) == OFF)){
 	    	menu -> state = PROCESS_STATE;
@@ -54,18 +57,21 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			newData = FALSE;
 			apagarLeds();
 			encenderLed(LED1);
+			RGBtoggle();
 		}
 	    else{
 	    	menu -> state = HOME_STATE;
 	    	newData = FALSE;
+			RGBtoggle();
 	    }
         break;
     case PROCESS_STATE:
-    	if (primeProcess -> number >= 2){
+    	if (primeProcess -> number >= 2){ //Defensivo para que no entre a los algoritmos
     		process(primeProcess);
 			menu -> state = RESULT_STATE;
 			displayResult(primeProcess);
 			apagarLeds();
+			RGBtoggle();
 			if (primeProcess -> result) encenderLed(LED3);
 			else encenderLed(LED2);
 			uartRxFlush(UART_USB);
@@ -74,6 +80,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
     		menu -> state = NUMBER_STATE;
 			primeProcess -> number = 0;
 			displayNumber();
+			RGBtoggle();
     	}
         break;
     case METHOD_STATE:
@@ -88,6 +95,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			else if (dataRead-48 == 8) primeProcess -> method 	= SQRT_210K2357_METHOD;
 			menu -> state = HOME_STATE;
 			displayHome(primeProcess);
+			RGBtoggle();
 		}
     	break;
     case NUMBER_STATE:
@@ -109,11 +117,13 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
     			displayHome(primeProcess);
     			i = 0;
     		}
+    		RGBtoggle();
     	}
     	if ((leerTecla(ptecla1) == OFF) || (leerTecla(ptecla2) == OFF) || (leerTecla(ptecla3) == OFF) || (leerTecla(ptecla4) == OFF)){
     		menu -> state = HOME_STATE;
 			displayHome(primeProcess);
 			i = 0;
+			RGBtoggle();
     	}
         break;
     case RESULT_STATE:
@@ -122,14 +132,14 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
     		menu -> state = HOME_STATE;
     		displayHome(primeProcess);
     		apagarLeds();
-			encenderLed(LEDB);
+    		RGBtoggle();
     		newData = FALSE;
     	}
     	if ((leerTecla(ptecla1) == OFF) || (leerTecla(ptecla2) == OFF) || (leerTecla(ptecla3) == OFF) || (leerTecla(ptecla4) == OFF)){
     		menu -> state = HOME_STATE;
 			displayHome(primeProcess);
 			apagarLeds();
-			encenderLed(LEDB);
+			RGBtoggle();
 		}
         break;
     default:
@@ -137,7 +147,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 		displayHome(primeProcess);
 		newData = FALSE;
 		apagarLeds();
-		encenderLed(LEDB);
+		RGBtoggle();
         break;
     }
 }
@@ -162,16 +172,14 @@ void initMenuMEF(primepro_t *primeProcess, menu_t *menu)
 	ptecla3 = &tecla3;
 	ptecla4 = &tecla4;
 
-	primeProcess -> number 	= 0;
-	primeProcess -> method 	= BRUTE_FORCE_METHOD;
-	primeProcess -> time 	= 0;
-	primeProcess -> result 	= 0;
-	primeProcess -> memory 	= 0;
-	primeProcess -> divider	= 0;
-    primeProcess -> result = FALSE;
-    primeProcess -> memoryOV = FALSE;
+	primeProcess -> number		= 0;
+	primeProcess -> method		= BRUTE_FORCE_METHOD;
+	primeProcess -> time		= 0;
+	primeProcess -> result		= 0;
+	primeProcess -> memory		= 0;
+	primeProcess -> divider		= 0;
+    primeProcess -> result		= FALSE;
+    primeProcess -> memoryOV	= FALSE;
 
     displayHome(primeProcess);
-    apagarLeds();
-	encenderLed(LEDB);
 }

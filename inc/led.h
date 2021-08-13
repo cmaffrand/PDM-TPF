@@ -62,6 +62,7 @@ ledMode_t ledMode;
 
 bool_t encenderLed(gpioMap_t led);
 bool_t apagarLeds(void);
+bool_t RGBtoggle(void);
 
 /*=====[Prototypes (declarations) of public interrupt functions]=============*/
 
