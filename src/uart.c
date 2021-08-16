@@ -1,6 +1,5 @@
 /*=============================================================================
  * Authors: Carlos Maffrand 	<carlosmaffrand5@gmail.com>
- *			Hernan Gomez Molino	<hernangomezmolino@gmail.com>
  * Date: 2021/07/31
  *===========================================================================*/
 
@@ -12,8 +11,9 @@
 /*=====[Definitions of public global variables]==============================*/
 
 /*=============================================================================
-* Funcion: displaySemaforo -> Muestra por consola los estados y modos del
-* semaforo y las teclas.
+* Funcion: displayHome -> Muestra por la consola serie el menu en Home.
+* Parametros de Entrada: 
+* primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 *=============================================================================*/
 
 void displayHome(primepro_t *primeProcess) {
@@ -87,6 +87,12 @@ void displayHome(primepro_t *primeProcess) {
 	printf("%" PRIu64, primeProcess -> number);
 	printf("\r\n");
 }
+
+/*=============================================================================
+* Funcion: displayMethod -> Muestra por la consola serie el menu en la pantalla
+* de seleccion de metodo.
+*=============================================================================*/
+
 void displayMethod(void) {
 	//se borra pantalla
 	uartWriteByte(   UART_USB, 27    );   // ESC command
@@ -109,6 +115,12 @@ void displayMethod(void) {
 	printf("| Presione a FERMAT_METHOD                       |\r\n");
 	printf("|------------------------------------------------|\r\n");
 }
+
+/*=============================================================================
+* Funcion: displayProcess -> Muestra por la consola serie el menu en la pantalla
+* de process.
+*=============================================================================*/
+
 void displayProcess(void) {
 	//se borra pantalla
 	uartWriteByte(   UART_USB, 27    );   // ESC command
@@ -119,6 +131,12 @@ void displayProcess(void) {
 	printf("| Procesando                                     |\r\n");
 	printf("|------------------------------------------------|\r\n");
 }
+
+/*=============================================================================
+* Funcion: displayNumber -> Muestra por la consola serie el menu en la pantalla
+* de seleccion de numero.
+*=============================================================================*/
+
 void displayNumber(void) {
 	//se borra pantalla
 	uartWriteByte(   UART_USB, 27    );   // ESC command
@@ -136,6 +154,13 @@ void displayNumber(void) {
 	uartWriteString( UART_USB, "[5A"  );  // Cursordos lineas arriba
 	printf("|--------------------\n");
 }
+
+/*=============================================================================
+* Funcion: displayResult -> Muestra por la consola serie el menu en la pantalla
+* de visualizacion de resultados.
+* Parametros de Entrada: 
+* primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
+*=============================================================================*/
 
 void displayResult(primepro_t *primeProcess) {
 

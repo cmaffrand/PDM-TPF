@@ -1,6 +1,6 @@
 /*=============================================================================
  * Authors: Carlos Maffrand 	<carlosmaffrand5@gmail.com>
- * Date: 2021/07/13
+ * Date: 2021/08/13
  *===========================================================================*/
 
 #include "sapi.h"
@@ -11,21 +11,21 @@
 /*=====[Definitions of functions]==============================*/
 
 /*=============================================================================
-* Funcion: encenderLed -> Utilizada para encender leds en la placa EDU CIAA.
-* Parametros de Entrada: gpioMap_t led, tipo de datos de sapi.h
-* Valor de retorno:	ret_val -> TRUE si la función se ejecutó correctamente.
-* 							-> FALSE si no se pudo encender el led.
+* Funcion: getTime -> Cuenta el tiempo desde el ultimo reseteo del contador de
+* ticks.
+* Parametros de Entrada: 
+* primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 *=============================================================================*/
 
 void getTime(primepro_t *primeProcess)
 {
-	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+	primeProcess->time = ((uint64_t)DWT_CYCCNT * (uint64_t)1000000000) / (uint64_t)SystemCoreClock;
 }
 
 /*=============================================================================
-* Funcion: apagarLeds -> Utilizada para apagar todos los leds de la placa EDU CIAA.
-* Parametros de Entrada:  void
-* Valor de retorno:	ret_val -> TRUE si la función se ejecutó correctamente
+* Funcion: setTime -> Setea el contador de ticks de sistema en un valor
+* determinado (uint32_t set).
+* Parametros de Entrada:  uint32_t set (valor de seteo)
 *=============================================================================*/
 
 void setTime(uint32_t set)

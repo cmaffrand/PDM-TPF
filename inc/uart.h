@@ -1,6 +1,5 @@
 /*=============================================================================
  * Authors: Carlos Maffrand 	<carlosmaffrand5@gmail.com>
- *			Hernan Gomez Molino	<hernangomezmolino@gmail.com>
  * Date: 2021/07/30
  *===========================================================================*/
 
