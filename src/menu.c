@@ -127,7 +127,6 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			{
 				primeProcess->number = (primeProcess->number) * 10 + dataRead - 48;
 				uartWriteByte(UART_USB, dataRead);
-				if (primeProcess->number >=)
 			}
 			// Presionando cualquier otro caracter se sale de la seleccion de numero
 			// regresando a Home.
