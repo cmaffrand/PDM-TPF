@@ -48,8 +48,9 @@ int main(void)
 
 		// TEST NUMBERS
 		//6516547; No primo, divisor en 487.
+		//100140049; 10007^2
 		//15485863; Primo
-		//817504243; //	838,041,641
+		//817504243; //	838,041,641 // Máximo primo para método 0
 		//982451653;
 		//1500000001;
 		//3333323333; primo maximo para metodos 5 y 6. Memoria.

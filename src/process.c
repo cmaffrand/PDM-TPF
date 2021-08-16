@@ -9,6 +9,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include "time.h"
 
 /*=============================================================================
 * Funcion: proccesFB -> 
@@ -48,6 +49,14 @@ bool_t process(primepro_t *primeProcess)
 			case SQRT_210K2357_METHOD:
 				ret_val = Method210K(primeProcess);
 				break;
+			case SIEVE_OF_SUNDARAM_METHOD:
+				ret_val = MethodSundaram(primeProcess);
+				break;
+			case SIEVE_OF_ATKIN_METHOD:
+				ret_val = MethodAtkin(primeProcess);
+				break;
+			case FERMAT_METHOD:
+				ret_val = MethodFermat(primeProcess);
 			default:
 			break;
 		}
@@ -67,18 +76,19 @@ static bool_t MethodBF(primepro_t *primeProcess){
     primeProcess -> result = FALSE;
     primeProcess -> memoryOV = FALSE;
 
-    DWT_CYCCNT = 0;
+    setTime(0);
 	for (i = 2; i <= primeProcess -> number/2; ++i){
 		if (primeProcess -> number % i == 0){
-			primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+			getTime(primeProcess);
 			primeProcess -> divider = i;
 			return primeProcess -> result;
 		}
 	}
-	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+	getTime(primeProcess);
 	primeProcess -> divider = primeProcess -> number;
 	return primeProcess -> result = TRUE;;
 }
+
 static bool_t MethodPL(primepro_t *primeProcess){
 
     uint64_t i;
@@ -87,28 +97,29 @@ static bool_t MethodPL(primepro_t *primeProcess){
 	primeProcess -> result = FALSE;
     primeProcess -> memoryOV = FALSE;
 
-	DWT_CYCCNT = 0;
+    setTime(0);
 	if (primeProcess -> number == 2) {
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = primeProcess -> number;
 		return primeProcess -> result = TRUE;
 	}
 	if (primeProcess -> number % 2 == 0) {
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = 2;
 		return primeProcess -> result;
 	}
 	for (i = 3; i <= primeProcess -> number / 2; i+=2) {
 		if (primeProcess -> number % i == 0) {
-			primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+			getTime(primeProcess);
 			primeProcess -> divider = i;
 			return primeProcess -> result;
 		}
 	}
-	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+	getTime(primeProcess);
 	primeProcess -> divider = primeProcess -> number;
 	return primeProcess -> result = TRUE;
 }
+
 static bool_t MethodSQRT(primepro_t *primeProcess){
 
     uint64_t i;
@@ -117,28 +128,29 @@ static bool_t MethodSQRT(primepro_t *primeProcess){
     primeProcess -> result = FALSE;
     primeProcess -> memoryOV = FALSE;
 
-    DWT_CYCCNT = 0;
+    setTime(0);
     if (primeProcess -> number == 2) {
-    		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-    		primeProcess -> divider = primeProcess -> number;
-    		return primeProcess -> result = TRUE;
+    	getTime(primeProcess);
+    	primeProcess -> divider = primeProcess -> number;
+    	return primeProcess -> result = TRUE;
     }
 	if (primeProcess -> number % 2 == 0) {
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = 2;
 		return primeProcess -> result;
 	}
     for (i = 3; i * i <= primeProcess -> number; i+=2) {
 		if (primeProcess -> number % i == 0) {
-			primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+			getTime(primeProcess);
 			primeProcess -> divider = i;
 			return primeProcess -> result;
 		}
 	}
-    primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-	primeProcess -> divider = primeProcess -> number;
+    getTime(primeProcess);
+    primeProcess -> divider = primeProcess -> number;
 	return primeProcess -> result = TRUE;
 }
+
 static bool_t Method6KPLUS1(primepro_t *primeProcess){
 
     uint64_t i;
@@ -147,30 +159,31 @@ static bool_t Method6KPLUS1(primepro_t *primeProcess){
     primeProcess -> result = FALSE;
     primeProcess -> memoryOV = FALSE;
 
-    DWT_CYCCNT = 0;
+    setTime(0);
 	if(primeProcess -> number <= 3) {
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = primeProcess -> number;
 		return primeProcess -> result = TRUE;
 	}
 	 if(primeProcess -> number % 2 == 0 || primeProcess -> number % 3 == 0) {
-		 primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		 getTime(primeProcess);
 		 if(primeProcess -> number % 2 == 0) primeProcess -> divider = 2;
 		 else primeProcess -> divider = 3;
 		 return primeProcess -> result;
 	 }
 	 for (i = 5; i * i <= primeProcess -> number; i+=6) {
 		if ((primeProcess -> number % i == 0) || (primeProcess -> number % (i + 2) == 0)){
-			primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+			getTime(primeProcess);
 			if (primeProcess -> number % i == 0) primeProcess -> divider = i;
 			else primeProcess -> divider = i + 2;
 			return primeProcess -> result;
 		}
 	 }
-	 primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+	 getTime(primeProcess);
 	 primeProcess -> divider = primeProcess -> number;
 	 return primeProcess -> result = TRUE;
 }
+
 static bool_t MethodERATO(primepro_t *primeProcess){
 
     uint32_t i,j,sqrtNumber,iterationLimit;
@@ -190,14 +203,14 @@ static bool_t MethodERATO(primepro_t *primeProcess){
     primeProcess -> memory = sizeof(primepro_t) + 4*sizeof(uint32_t) + sqrtNumber/2 * sizeof(bool_t);
     memset(prime, TRUE, sizeof(prime));
 
-    DWT_CYCCNT = 0;
+    setTime(0);
     if ((primeProcess -> number == 2) || (primeProcess -> number == 3) || (primeProcess -> number == 5)) {
-    	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-		primeProcess -> divider = primeProcess -> number;
+    	getTime(primeProcess);
+    	primeProcess -> divider = primeProcess -> number;
 		return primeProcess -> result = TRUE;
     }
 	else if (primeProcess -> number % 2 == 0) {
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = 2;
 		return primeProcess -> result;
 	}
@@ -213,13 +226,13 @@ static bool_t MethodERATO(primepro_t *primeProcess){
 		for (i = 0; i <= iterationLimit; i++){
 			if (prime[i] == TRUE){
 				if (primeProcess -> number % (2*(i+1)+1) == 0) {
-					primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+					getTime(primeProcess);
 					primeProcess -> divider = (2*(i+1)+1);
 					return primeProcess -> result;
 				}
 			}
 		}
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = primeProcess -> number;
 		return primeProcess -> result = TRUE;
 	}
@@ -244,14 +257,14 @@ static bool_t MethodEuler(primepro_t *primeProcess){
 	primeProcess -> memory = sizeof(primepro_t) + 6*sizeof(uint32_t) + sqrtNumber/2 * sizeof(bool_t);
 	memset(prime, TRUE, sizeof(prime));
 
-	DWT_CYCCNT = 0;
+	setTime(0);
 	if (primeProcess -> number == 2) {
-	    	primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-			primeProcess -> divider = primeProcess -> number;
-			return primeProcess -> result = TRUE;
+		getTime(primeProcess);
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
 	    }
 	else if (primeProcess -> number % 2 == 0) {
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = 2;
 		return primeProcess -> result;
 	}
@@ -270,13 +283,13 @@ static bool_t MethodEuler(primepro_t *primeProcess){
 		for (p = 3; p <= iterationLimit; p+=2){
 			if (prime[p/2-1] == TRUE){
 				if (primeProcess -> number % p == 0) {
-					primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+					getTime(primeProcess);
 					primeProcess -> divider = p;
 					return primeProcess -> result;
 				}
 			}
 		}
-		primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+		getTime(primeProcess);
 		primeProcess -> divider = primeProcess -> number;
 		return primeProcess -> result = TRUE;
 	}
@@ -288,16 +301,17 @@ static bool_t Method30K (primepro_t *primeProcess){
 
     primeProcess -> memory = sizeof(primepro_t) + sizeof(uint64_t);
     primeProcess -> result = FALSE;
-    DWT_CYCCNT = 0;
+
+    setTime(0);
     if(primeProcess -> number <= 30){
     	return MethodSQRT(primeProcess);
     }
 	if(primeProcess -> number % 2 == 0 || primeProcess -> number % 3 == 0 || primeProcess -> number % 5 == 0) {
-		 primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-		 if(primeProcess -> number % 2 == 0) primeProcess -> divider = 2;
-		 else if(primeProcess -> number % 3 == 0) primeProcess -> divider = 3;
-		 else primeProcess -> divider = 5;
-		 return primeProcess -> result;
+		getTime(primeProcess);
+		if(primeProcess -> number % 2 == 0) primeProcess -> divider = 2;
+		else if(primeProcess -> number % 3 == 0) primeProcess -> divider = 3;
+		else primeProcess -> divider = 5;
+		return primeProcess -> result;
 	 }
 
 	 for (i = 7; i * i <= primeProcess -> number; i+=30) {
@@ -310,7 +324,7 @@ static bool_t Method30K (primepro_t *primeProcess){
 			||(	primeProcess -> number % (i + 22) == 0)
 			||(	primeProcess -> number % (i + 24) == 0)){
 
-			primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+			getTime(primeProcess);
 			if 		(primeProcess -> number % i == 0) 			primeProcess -> divider = i;
 			else if (primeProcess -> number % (i + 4) == 0) 	primeProcess -> divider = i + 4;
 			else if (primeProcess -> number % (i + 6) == 0) 	primeProcess -> divider = i + 6;
@@ -322,7 +336,7 @@ static bool_t Method30K (primepro_t *primeProcess){
 			return primeProcess -> result;
 		}
 	 }
-	 primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+	 getTime(primeProcess);
 	 primeProcess -> divider = primeProcess -> number;
 	 return primeProcess -> result = TRUE;
 }
@@ -333,7 +347,8 @@ static bool_t Method210K (primepro_t *primeProcess){
 
     primeProcess -> memory = sizeof(primepro_t) + sizeof(uint64_t);
     primeProcess -> result = FALSE;
-    DWT_CYCCNT = 0;
+
+    setTime(0);
     if(primeProcess -> number <= 210){
     	return MethodSQRT(primeProcess);
     }
@@ -341,12 +356,12 @@ static bool_t Method210K (primepro_t *primeProcess){
 			primeProcess -> number % 3 == 0 ||
 			primeProcess -> number % 5 == 0 ||
 			primeProcess -> number % 7 == 0)  {
-		 primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
-		 if(		primeProcess -> number % 2 == 0) primeProcess -> divider = 2;
-		 else if(	primeProcess -> number % 3 == 0) primeProcess -> divider = 3;
-		 else if(	primeProcess -> number % 5 == 0) primeProcess -> divider = 5;
-		 else 		primeProcess -> divider = 7;
-		 return primeProcess -> result;
+		getTime(primeProcess);
+		if(		primeProcess -> number % 2 == 0) primeProcess -> divider = 2;
+		else if(	primeProcess -> number % 3 == 0) primeProcess -> divider = 3;
+		else if(	primeProcess -> number % 5 == 0) primeProcess -> divider = 5;
+		else 		primeProcess -> divider = 7;
+		return primeProcess -> result;
 	 }
 
 	 for (i = 11; i * i <= primeProcess -> number; i+=210) {
@@ -398,7 +413,7 @@ static bool_t Method210K (primepro_t *primeProcess){
 			||(	primeProcess -> number % (i + 188) == 0)
 			||(	primeProcess -> number % (i + 198) == 0)){
 
-			primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+			getTime(primeProcess);
 			if 		(	primeProcess -> number % 	i 		  == 0)	primeProcess -> divider = i;
             else if	(	primeProcess -> number % (	i + 2	) == 0) primeProcess -> divider = i + 2;
 			else if	(	primeProcess -> number % (	i + 6	) == 0) primeProcess -> divider = i + 6;
@@ -449,7 +464,212 @@ static bool_t Method210K (primepro_t *primeProcess){
 			return primeProcess -> result;
 		}
 	 }
-	 primeProcess -> time = ((uint64_t) DWT_CYCCNT * (uint64_t) 1000000000)/ (uint64_t) SystemCoreClock;
+	 getTime(primeProcess);
 	 primeProcess -> divider = primeProcess -> number;
 	 return primeProcess -> result = TRUE;
+}
+
+static bool_t MethodSundaram(primepro_t *primeProcess){
+
+	uint32_t i,j,sqrtNumber,iterationLimit;
+	sqrtNumber = (uint32_t) (sqrt(primeProcess -> number));
+
+	primeProcess -> result = FALSE;
+
+	if ( (sqrtNumber-1)/2 > SEGMENT_SIZE){ //Chequeo de cantidad de memoria.
+		primeProcess -> memoryOV = TRUE;
+		iterationLimit = SEGMENT_SIZE;
+	}
+	else {
+		primeProcess -> memoryOV = FALSE;
+		iterationLimit = (sqrtNumber-1)/2;
+	}
+	bool_t prime[SEGMENT_SIZE];
+	primeProcess -> memory = sizeof(primepro_t) + 4*sizeof(uint32_t) + iterationLimit * sizeof(bool_t);
+	memset(prime, FALSE, sizeof(prime));
+
+	setTime(0);
+	if (primeProcess -> number == 2) {
+		getTime(primeProcess);
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
+		}
+	else if (primeProcess -> number % 2 == 0) {
+		getTime(primeProcess);
+		primeProcess -> divider = 2;
+		return primeProcess -> result;
+	}
+	else {
+		//SIEVE
+		for (i = 1; i <= iterationLimit; i++){
+			for (j = i; i + j + 2*i*j <= iterationLimit; j++){
+				prime[i + j + 2*i*j] = TRUE;
+			}
+		}
+		//PRIMARY TEST
+		for (i = 1; i <= iterationLimit; i++){
+			if (prime[i] == FALSE){
+				if (primeProcess -> number % (2*i+1) == 0) {
+					getTime(primeProcess);
+					primeProcess -> divider = (2*i+1);
+					return primeProcess -> result;
+				}
+			}
+		}
+		getTime(primeProcess);
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
+	}
+}
+
+static bool_t MethodAtkin(primepro_t *primeProcess){
+
+	uint32_t a,x,y,i,r,n,sqrtNumber,iterationLimit;
+	sqrtNumber = (uint32_t) (sqrt(primeProcess -> number));
+
+	primeProcess -> result = FALSE;
+
+	if ( sqrtNumber > SEGMENT_SIZE){ //Chequeo de cantidad de memoria.
+		primeProcess -> memoryOV = TRUE;
+		iterationLimit = SEGMENT_SIZE;
+	}
+	else {
+		primeProcess -> memoryOV = FALSE;
+		iterationLimit = sqrtNumber;
+	}
+	bool_t prime[SEGMENT_SIZE];
+	primeProcess -> memory = sizeof(primepro_t) + 7*sizeof(uint32_t) + iterationLimit * sizeof(bool_t);
+	memset(prime, FALSE, sizeof(prime));
+
+	setTime(0);
+	if ((primeProcess -> number == 2) || (primeProcess -> number == 3)) {
+		getTime(primeProcess);
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
+	}
+	else if (primeProcess -> number % 2 == 0) {
+		getTime(primeProcess);
+		primeProcess -> divider = 2;
+		return primeProcess -> result;
+	}
+	else if (primeProcess -> number % 3 == 0) {
+		getTime(primeProcess);
+		primeProcess -> divider = 3;
+		return primeProcess -> result;
+	}
+	else {
+		//SIEVE
+		for (x = 1; x * x < iterationLimit; x++) {
+			for (y = 1; y * y < iterationLimit; y++) {
+				// Resolución de ecuaciones de primaridad
+				n = (4 * x * x) + (y * y);
+				if (n <= iterationLimit && (n % 12 == 1 || n % 12 == 5))
+					prime[n] ^= TRUE;
+
+				n = (3 * x * x) + (y * y);
+				if (n <= iterationLimit && n % 12 == 7)
+					prime[n] ^= TRUE;
+
+				n = (3 * x * x) - (y * y);
+				if (x > y && n <= iterationLimit && n % 12 == 11)
+					prime[n] ^= TRUE;
+			}
+		}
+
+		/* Se comentar oorque hace más lento al metodo.
+		 * Se testean alguno números de más pero es menos costoso
+		//Eliminando los múltiples cuadrados de primos.
+		for (int r = 5; r <= iterationLimit; r+=2)
+			if (prime[r])
+				for (int i = r*r; i < iterationLimit; i += r*r)
+					prime[i] = false;*/
+
+		//PRIMARY TEST
+		for (a = 5; a <= iterationLimit; a+=2){
+			if (prime[a]){
+				if (primeProcess -> number % a == 0) {
+					getTime(primeProcess);
+					primeProcess -> divider = a;
+					return primeProcess -> result;
+				}
+			}
+		}
+		getTime(primeProcess);
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
+	}
+}
+
+// Calcula (a^n)%p sin utilizar POW
+static uint64_t power(uint64_t a, uint64_t n, uint64_t p){
+	uint32_t res = 1;  // Inicializa el resultado
+	a = a % p;
+
+	while (n > 0)
+	{
+		if (n & 1)
+			res = (res*a) % p;
+		n = n>>1;
+		a = (a*a) % p;
+	}
+	return res;
+}
+
+//gdc entre a y b
+static uint64_t gcd(uint64_t a, uint64_t b){
+	if(a < b)
+		return gcd(b, a);
+	else if(a%b == 0)
+		return b;
+	else return gcd(b, a%b);
+}
+
+static bool_t MethodFermat(primepro_t *primeProcess){
+   uint8_t k = 10;
+   uint8_t i;
+   uint64_t a;
+
+   uint8_t prime[] =
+   	   {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,
+   		79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,
+		163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251};
+
+   primeProcess -> memory = sizeof(primepro_t) + sizeof(uint8_t) + sizeof(uint64_t) + sizeof(prime);
+   primeProcess -> result = FALSE;
+   primeProcess -> memoryOV = FALSE;
+   primeProcess -> divider = 0;
+
+   setTime(0);
+   if ((primeProcess -> number == 2) || (primeProcess -> number == 3)) {
+		getTime(primeProcess);
+		primeProcess -> divider = primeProcess -> number;
+		return primeProcess -> result = TRUE;
+	}
+   	else {
+   	   for (i = 0; i<= sizeof(prime)/sizeof(uint8_t); i++){
+			if (primeProcess -> number % prime[i] == 0){
+				getTime(primeProcess);
+				primeProcess -> divider = prime[i];
+				return primeProcess -> result;
+			}
+   	   }
+	   while (k>0) // itera k veces subir el k para bajar probabilidad de falso positivo.
+	   {
+		   a = 2 + rand()%(primeProcess -> number-4);
+		   // Se chequea si a y el numero a chequear son coprimos
+		   if (gcd(primeProcess -> number, a) != 1){
+			   getTime(primeProcess);
+			   return primeProcess -> result;
+		   }
+		   // Fermat's little theorem
+		   if (power(a, primeProcess -> number-1, primeProcess -> number) != 1){
+			   getTime(primeProcess);
+			   return primeProcess -> result;
+		   }
+		   k--;
+	   }
+	}
+   	getTime(primeProcess);
+   	primeProcess -> divider = primeProcess -> number;
+   	return primeProcess -> result = TRUE;
 }

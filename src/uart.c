@@ -46,6 +46,15 @@ void displayHome(primepro_t *primeProcess) {
 	case SQRT_210K2357_METHOD:
 		strcpy(mensajeMetodo,"SQRT_210K2357_METHOD");
 			break;
+	case SIEVE_OF_SUNDARAM_METHOD:
+		strcpy(mensajeMetodo,"SIEVE_OF_SUNDARAM_METHOD");
+		break;
+	case SIEVE_OF_ATKIN_METHOD:
+		strcpy(mensajeMetodo,"SIEVE_OF_ATKIN_METHOD");
+		break;
+	case FERMAT_METHOD:
+		strcpy(mensajeMetodo,"FERMAT_METHOD");
+		break;
 	default:
 		break;
 	}
@@ -62,10 +71,10 @@ void displayHome(primepro_t *primeProcess) {
 	printf("|------------------------------------------------|\r\n");
 	printf("| Metodo:                                        |\r\n");
 	printf("|------------------------------------------------|\r\n");
-	printf("| Presione 1 o TEC1 Para selecionar el metodo.   |\r\n");
-	printf("| Presione 2 o TEC2 Para ingresar un número.     |\r\n");
-	printf("| Presione 3 o TEC3 Para para ver el resultado.  |\r\n");
-	printf("| Presione 4 o TEC4 Para procesar                |\r\n");
+	printf("| Presione M o TEC1 Para selecionar el metodo.   |\r\n");
+	printf("| Presione N o TEC2 Para ingresar un número.     |\r\n");
+	printf("| Presione R o TEC3 Para para ver el resultado.  |\r\n");
+	printf("| Presione P o TEC4 Para procesar                |\r\n");
 	printf("|------------------------------------------------|\r\n");
 	uartWriteByte(   UART_USB, 27    );   // ESC command
 	uartWriteString( UART_USB, "[7A"  );  // Cursordos lineas arriba
@@ -95,6 +104,9 @@ void displayMethod(void) {
 	printf("| Presione 6 SIEVE_OF_EULER_METHOD               |\r\n");
 	printf("| Presione 7 SQRT_30K235_METHOD                  |\r\n");
 	printf("| Presione 8 SQRT_210K2357_METHOD                |\r\n");
+	printf("| Presione 9 SIEVE_OF_SUNDARAM_METHOD            |\r\n");
+	printf("| Presione 0 SIEVE_OF_ATKIN_METHOD               |\r\n");
+	printf("| Presione a FERMAT_METHOD                       |\r\n");
 	printf("|------------------------------------------------|\r\n");
 }
 void displayProcess(void) {
@@ -155,7 +167,16 @@ void displayResult(primepro_t *primeProcess) {
 		break;
 	case SQRT_210K2357_METHOD:
 		strcpy(mensajeMetodo,"SQRT_210K2357_METHOD");
-			break;
+		break;
+	case SIEVE_OF_SUNDARAM_METHOD:
+		strcpy(mensajeMetodo,"SIEVE_OF_SUNDARAM_METHOD");
+		break;
+	case SIEVE_OF_ATKIN_METHOD:
+		strcpy(mensajeMetodo,"SIEVE_OF_ATKIN_METHOD");
+		break;
+	case FERMAT_METHOD:
+		strcpy(mensajeMetodo,"FERMAT_METHOD");
+		break;
 	default:
 		break;
 	}

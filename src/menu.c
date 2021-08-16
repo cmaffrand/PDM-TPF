@@ -29,40 +29,30 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
     case HOME_STATE:
     	// Si recibe un byte de la UART_USB lo guardarlo en la variable dato.
     	newData = uartReadByte( UART_USB, &dataRead);
-	    if (((newData == TRUE) && (dataRead-48 == 1)) || (leerTecla(ptecla1) == OFF)){
+	    if (((newData == TRUE) && ((dataRead == 'm') || (dataRead == 'M'))) || (leerTecla(ptecla1) == OFF)){
 	    	menu -> state = METHOD_STATE;
 	    	displayMethod();
 	    	newData = FALSE;
-			RGBtoggle();
 	    }
-	    else if (((newData == TRUE) && (dataRead-48 == 2)) || (leerTecla(ptecla2) == OFF)){
+	    else if (((newData == TRUE) && ((dataRead == 'n') || (dataRead == 'N'))) || (leerTecla(ptecla2) == OFF)){
 	    	menu -> state = NUMBER_STATE;
 	    	primeProcess -> number = 0;
 	    	displayNumber();
 	    	newData = FALSE;
-			RGBtoggle();
 	    }
-	    else if (((newData == TRUE) && (dataRead-48 == 3)) || (leerTecla(ptecla3) == OFF)){
+	    else if (((newData == TRUE) && ((dataRead == 'r') || (dataRead == 'R'))) || (leerTecla(ptecla3) == OFF)){
 	    	menu -> state = RESULT_STATE;
 			displayResult(primeProcess);
 			newData = FALSE;
-			apagarLeds();
-			if (primeProcess -> result) encenderLed(LED3);
-			else encenderLed(LED2);
-			RGBtoggle();
 	    }
-	    else if (((newData == TRUE) && (dataRead-48 == 4)) || (leerTecla(ptecla4) == OFF)){
+	    else if (((newData == TRUE) && ((dataRead == 'p') || (dataRead == 'P'))) || (leerTecla(ptecla4) == OFF)){
 	    	menu -> state = PROCESS_STATE;
 			displayProcess();
 			newData = FALSE;
-			apagarLeds();
-			encenderLed(LED1);
-			RGBtoggle();
 		}
 	    else{
 	    	menu -> state = HOME_STATE;
 	    	newData = FALSE;
-			RGBtoggle();
 	    }
         break;
     case PROCESS_STATE:
@@ -70,17 +60,12 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
     		process(primeProcess);
 			menu -> state = RESULT_STATE;
 			displayResult(primeProcess);
-			apagarLeds();
-			RGBtoggle();
-			if (primeProcess -> result) encenderLed(LED3);
-			else encenderLed(LED2);
 			uartRxFlush(UART_USB);
     	}
     	else {
     		menu -> state = NUMBER_STATE;
 			primeProcess -> number = 0;
 			displayNumber();
-			RGBtoggle();
     	}
         break;
     case METHOD_STATE:
@@ -93,9 +78,11 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			else if (dataRead-48 == 6) primeProcess -> method 	= SIEVE_OF_EULER_METHOD;
 			else if (dataRead-48 == 7) primeProcess -> method 	= SQRT_30K235_METHOD;
 			else if (dataRead-48 == 8) primeProcess -> method 	= SQRT_210K2357_METHOD;
+			else if (dataRead-48 == 9) primeProcess -> method 	= SIEVE_OF_SUNDARAM_METHOD;
+			else if (dataRead-48 == 0) primeProcess -> method 	= SIEVE_OF_ATKIN_METHOD;
+			else if (dataRead == 97) primeProcess -> method 	= FERMAT_METHOD;
 			menu -> state = HOME_STATE;
 			displayHome(primeProcess);
-			RGBtoggle();
 		}
     	break;
     case NUMBER_STATE:
@@ -112,18 +99,16 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			}
     		newData = FALSE;
     		i++;
-    		if (i == 20){
+    		if (i == 21){
     			menu -> state = HOME_STATE;
     			displayHome(primeProcess);
     			i = 0;
     		}
-    		RGBtoggle();
     	}
     	if ((leerTecla(ptecla1) == OFF) || (leerTecla(ptecla2) == OFF) || (leerTecla(ptecla3) == OFF) || (leerTecla(ptecla4) == OFF)){
     		menu -> state = HOME_STATE;
 			displayHome(primeProcess);
 			i = 0;
-			RGBtoggle();
     	}
         break;
     case RESULT_STATE:
@@ -131,25 +116,20 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
     	if (newData == TRUE) {
     		menu -> state = HOME_STATE;
     		displayHome(primeProcess);
-    		apagarLeds();
-    		RGBtoggle();
     		newData = FALSE;
     	}
     	if ((leerTecla(ptecla1) == OFF) || (leerTecla(ptecla2) == OFF) || (leerTecla(ptecla3) == OFF) || (leerTecla(ptecla4) == OFF)){
     		menu -> state = HOME_STATE;
 			displayHome(primeProcess);
-			apagarLeds();
-			RGBtoggle();
 		}
         break;
     default:
     	menu -> state = HOME_STATE;
 		displayHome(primeProcess);
 		newData = FALSE;
-		apagarLeds();
-		RGBtoggle();
         break;
     }
+    ledManage(primeProcess,menu);
 }
 
 /*=============================================================================
@@ -182,4 +162,5 @@ void initMenuMEF(primepro_t *primeProcess, menu_t *menu)
     primeProcess -> memoryOV	= FALSE;
 
     displayHome(primeProcess);
+    ledManage(primeProcess,menu);
 }

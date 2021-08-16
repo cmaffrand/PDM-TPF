@@ -56,6 +56,9 @@ bool_t apagarLeds(void)
    gpioWrite(LED1, 0);
    gpioWrite(LED2, 0);
    gpioWrite(LED3, 0);
+   gpioWrite(LEDR, 0);
+   gpioWrite(LEDG, 0);
+   gpioWrite(LEDB, 0);
 
    return ret_val;
 }
@@ -63,13 +66,44 @@ bool_t apagarLeds(void)
 bool_t RGBtoggle(void)
 {
    bool_t ret_val = 1;
-   static uint8_t RGBState = 255;
+   static uint8_t RGBState = 0;
    uint8_t select = 0;
 
-   RGBState++;
    select = RGBState % 8;
    gpioWrite(LEDR, select % 2);
    gpioWrite(LEDG, (select/2) % 2);
    gpioWrite(LEDB, select / 4);
+   RGBState++;
    return ret_val;
+}
+
+void ledManage(primepro_t *primeProcess, menu_t *menu){
+	static primepro_t 	lastPrimePro;
+	static menu_t 		lastMenu;
+
+	if ((primeProcess->number 	!= lastPrimePro.number)		||
+		(primeProcess->time 	!= lastPrimePro.time)		||
+		(primeProcess->method 	!= lastPrimePro.method)		||
+		(primeProcess->memory 	!= lastPrimePro.memory)		||
+		(primeProcess->memoryOV != lastPrimePro.memoryOV)	||
+		(primeProcess->result 	!= lastPrimePro.result)		||
+		(primeProcess->divider	!= lastPrimePro.divider)	||
+		(menu->state != lastMenu.state)) {
+
+		lastPrimePro.number 	= primeProcess->number;
+		lastPrimePro.time 		= primeProcess->time;
+		lastPrimePro.method 	= primeProcess->method;
+		lastPrimePro.memory 	= primeProcess->memory;
+		lastPrimePro.memoryOV 	= primeProcess->memoryOV;
+		lastPrimePro.result		= primeProcess->result;
+		lastPrimePro.divider	= primeProcess->divider;
+		lastMenu.state 			= menu->state;
+
+		apagarLeds();
+		RGBtoggle();
+		if ((lastMenu.state == RESULT_STATE) && (lastPrimePro.result)) encenderLed(LED3);
+		else if ((lastMenu.state == RESULT_STATE) && (!lastPrimePro.result)) encenderLed(LED2);
+		else if (lastMenu.state == PROCESS_STATE) encenderLed(LED1);
+
+	}
 }

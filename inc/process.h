@@ -22,7 +22,7 @@ extern "C"
 
 /*=====[Definition macros of public constants]===============================*/
 
-#define SEGMENT_SIZE 29500 // 20480 - 20k
+#define SEGMENT_SIZE 20480 // 20480 - 20k
 
 /*=====[Public function-like macros]=========================================*/
 
@@ -38,6 +38,9 @@ typedef enum
 	SIEVE_OF_EULER_METHOD,
 	SQRT_30K235_METHOD,
 	SQRT_210K2357_METHOD,
+	SIEVE_OF_SUNDARAM_METHOD,
+	SIEVE_OF_ATKIN_METHOD,
+	FERMAT_METHOD,
 } mtd_t;
 
 typedef struct
@@ -62,6 +65,11 @@ static bool_t MethodERATO(primepro_t *primeProcess);
 static bool_t MethodEuler(primepro_t *primeProcess);
 static bool_t Method30K(primepro_t *primeProcess);
 static bool_t Method210K (primepro_t *primeProcess);
+static bool_t MethodSundaram(primepro_t *primeProcess);
+static bool_t MethodAtkin(primepro_t *primeProcess);
+static uint64_t power(uint64_t a, uint64_t n, uint64_t p);
+static uint64_t gcd(uint64_t a, uint64_t b);
+static bool_t MethodFermat(primepro_t *primeProcess);
 
 /*=====[Prototypes (declarations) of public interrupt functions]=============*/
 
