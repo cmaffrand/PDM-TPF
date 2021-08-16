@@ -23,53 +23,41 @@ extern "C"
 {
 #endif
 
-/*=====[Definition macros of public constants]===============================*/
+	/*=====[Definition macros of public constants]===============================*/
 
-// Se crea un valor de led nulo, para determinar que todos los leds tienen que
-// estar apagados.
-#define LED_OFF 46
-#define DELAY_ROJO_NORMAL 3000
-#define DELAY_ROJOAMA_NORMAL 500
-#define DELAY_VERDE_NORMAL 1000
-#define DELAY_AMARILLO_NORMAL 500
-#define DELAY_AMARILLO_DESC 500
-#define DELAY_OFF_DESC 500
-#define DELAY_ROJO_ALARMA 1000
-#define DELAY_OFF_ALARMA 1000
+	/*=====[Public function-like macros]=========================================*/
 
-/*=====[Public function-like macros]=========================================*/
+	/*=====[Definitions of public data types]====================================*/
 
-/*=====[Definitions of public data types]====================================*/
+	typedef enum
+	{
+		RED_STATE,
+		GREEN_STATE,
+		YELLOW_STATE,
+		OFF_STATE
+	} ledState_t;
 
-typedef enum
-{
-	RED_STATE,
-	GREEN_STATE,
-	YELLOW_STATE,
-	OFF_STATE
-} ledState_t;
+	ledState_t ledState;
 
-ledState_t ledState;
+	typedef enum
+	{
+		HOME_MODE,
+		RESULT_MODE,
+		PROCESS_MODE
+	} ledMode_t;
 
-typedef enum
-{
-	HOME_MODE,
-	RESULT_MODE,
-	PROCESS_MODE
-} ledMode_t;
+	ledMode_t ledMode;
 
-ledMode_t ledMode;
+	/*=====[Prototypes (declarations) of public functions]=======================*/
 
-/*=====[Prototypes (declarations) of public functions]=======================*/
+	bool_t encenderLed(gpioMap_t led);
+	bool_t apagarLeds(void);
+	bool_t RGBtoggle(void);
+	void ledManage(primepro_t *primeProcess, menu_t *menu);
 
-bool_t encenderLed(gpioMap_t led);
-bool_t apagarLeds(void);
-bool_t RGBtoggle(void);
-void ledManage(primepro_t *primeProcess, menu_t *menu);
+	/*=====[Prototypes (declarations) of public interrupt functions]=============*/
 
-/*=====[Prototypes (declarations) of public interrupt functions]=============*/
-
-/*=====[C++ - end]===========================================================*/
+	/*=====[C++ - end]===========================================================*/
 
 #ifdef __cplusplus
 }

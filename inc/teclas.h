@@ -44,7 +44,7 @@ extern "C"
 		estadoMEF_t estado;
 	} dbn_t;
 
-	dbn_t tecla1,tecla2,tecla3,tecla4;
+	dbn_t tecla1, tecla2, tecla3, tecla4;
 
 	dbn_t *ptecla1;
 	dbn_t *ptecla2;

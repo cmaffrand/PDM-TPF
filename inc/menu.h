@@ -21,34 +21,36 @@ extern "C"
 {
 #endif
 
-/*=====[Definition macros of public constants]===============================*/
+	/*=====[Definition macros of public constants]===============================*/
 
-/*=====[Public function-like macros]=========================================*/
+	#define MAX_DIGIT 20
 
-/*=====[Definitions of public data types]====================================*/
+	/*=====[Public function-like macros]=========================================*/
 
-typedef enum
-{
-	HOME_STATE,
-	PROCESS_STATE,
-	METHOD_STATE,
-	NUMBER_STATE,
-	RESULT_STATE
-} menuState_t;
+	/*=====[Definitions of public data types]====================================*/
 
-typedef struct
-{ // estructura para controlar el menu
-	menuState_t state;
-} menu_t;
+	typedef enum
+	{
+		HOME_STATE,
+		PROCESS_STATE,
+		METHOD_STATE,
+		NUMBER_STATE,
+		RESULT_STATE
+	} menuState_t;
 
-/*=====[Prototypes (declarations) of public functions]=======================*/
+	typedef struct
+	{ // estructura para controlar el menu
+		menuState_t state;
+	} menu_t;
 
-void initMenuMEF(primepro_t *primeProcess, menu_t *menu);
-void MenuMEF(primepro_t *primeProcess, menu_t *menu);
+	/*=====[Prototypes (declarations) of public functions]=======================*/
 
-/*=====[Prototypes (declarations) of public interrupt functions]=============*/
+	void initMenuMEF(primepro_t *primeProcess, menu_t *menu);
+	void MenuMEF(primepro_t *primeProcess, menu_t *menu);
 
-/*=====[C++ - end]===========================================================*/
+	/*=====[Prototypes (declarations) of public interrupt functions]=============*/
+
+	/*=====[C++ - end]===========================================================*/
 
 #ifdef __cplusplus
 }

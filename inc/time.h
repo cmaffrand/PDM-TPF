@@ -21,20 +21,20 @@ extern "C"
 {
 #endif
 
-/*=====[Definition macros of public constants]===============================*/
+    /*=====[Definition macros of public constants]===============================*/
 
-/*=====[Public function-like macros]=========================================*/
+    /*=====[Public function-like macros]=========================================*/
 
-/*=====[Definitions of public data types]====================================*/
+    /*=====[Definitions of public data types]====================================*/
 
-/*=====[Prototypes (declarations) of public functions]=======================*/
+    /*=====[Prototypes (declarations) of public functions]=======================*/
 
-void setTime(uint32_t set);
-void getTime(primepro_t *primeProcess);
+    void setTime(uint32_t set);
+    void getTime(primepro_t *primeProcess);
 
-/*=====[Prototypes (declarations) of public interrupt functions]=============*/
+    /*=====[Prototypes (declarations) of public interrupt functions]=============*/
 
-/*=====[C++ - end]===========================================================*/
+    /*=====[C++ - end]===========================================================*/
 
 #ifdef __cplusplus
 }
