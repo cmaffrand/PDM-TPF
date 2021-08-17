@@ -1,12 +1,15 @@
-# PdM-Practico3
+# PdM-TP Final - Detector de números primos en EDU-CIAA
 
-Autores:
+Autor:
 
-Hernan Gomez Molino (hernangmol@gmail.com)
 Carlos Maffrand (carlosmaffrand5@gmail.com)
 
-Repositorio para el ejercicio 3 del la materia de programación de micro controladores de la maestría de sistemas embebidos de la UBA.
+Consola serie que permite seleccionar entre varios algoritmos para determinar primariedad y devuelve el resultado con el tiempo de procesamiento.
 
-Se implementa loa opcionales 2, 3 y 4.
+La información de algoritmos fue recavada de diferentes fuentes:
 
-
+https://www.wolframalpha.com
+https://en.wikipedia.org/
+https://www.bigprimes.net
+https://www.geeksforgeeks.org
+https://stackoverflow.com
