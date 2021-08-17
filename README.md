@@ -9,7 +9,11 @@ Consola serie que permite seleccionar entre varios algoritmos para determinar pr
 La información de algoritmos fue recavada de diferentes fuentes:
 
 https://www.wolframalpha.com
+
 https://en.wikipedia.org/
+
 https://www.bigprimes.net
+
 https://www.geeksforgeeks.org
+
 https://stackoverflow.com
