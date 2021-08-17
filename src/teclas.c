@@ -19,12 +19,12 @@
 bool_t leerTecla(dbn_t *ptecla)
 {
 	bool_t ret_val;
-	static bool_t MEF_Init[] = {TRUE,TRUE,TRUE,TRUE};
+	static bool_t MEF_Init[] = {TRUE, TRUE, TRUE, TRUE};
 
-	if (MEF_Init[ptecla->tecla-36])
+	if (MEF_Init[ptecla->tecla - 36])
 	{
 		inicializarMEF(ptecla);
-		MEF_Init[ptecla->tecla-36] = FALSE;
+		MEF_Init[ptecla->tecla - 36] = FALSE;
 	}
 
 	// Validacion de teclas presentes en la placa EDU CIAA.

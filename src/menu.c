@@ -140,7 +140,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			newData = FALSE;
 			// Si el dato ya tiene 20 digitos se vuelve al home.
 			// (máximo entero representable por un uint64_t)
-			if (i == MAX_DIGIT-1)
+			if (i == MAX_DIGIT - 1)
 			{
 				menu->state = HOME_STATE;
 				displayHome(primeProcess);

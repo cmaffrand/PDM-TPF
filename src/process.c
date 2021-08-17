@@ -17,7 +17,7 @@
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 bool_t process(primepro_t *primeProcess)
@@ -74,7 +74,7 @@ bool_t process(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t MethodBF(primepro_t *primeProcess)
@@ -108,7 +108,7 @@ static bool_t MethodBF(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t MethodPL(primepro_t *primeProcess)
@@ -156,7 +156,7 @@ static bool_t MethodPL(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t MethodSQRT(primepro_t *primeProcess)
@@ -204,7 +204,7 @@ static bool_t MethodSQRT(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t Method6KPLUS1(primepro_t *primeProcess)
@@ -259,7 +259,7 @@ static bool_t Method6KPLUS1(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t MethodERATO(primepro_t *primeProcess)
@@ -422,7 +422,7 @@ static bool_t MethodEuler(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t Method30K(primepro_t *primeProcess)
@@ -642,7 +642,7 @@ static bool_t Method210K(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t MethodSundaram(primepro_t *primeProcess)
@@ -720,7 +720,7 @@ static bool_t MethodSundaram(primepro_t *primeProcess)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t MethodAtkin(primepro_t *primeProcess)
@@ -828,8 +828,8 @@ static uint64_t power(uint64_t a, uint64_t n, uint64_t p)
 	while (n > 0)
 	{
 		if (n % 2 == 1)
-			res = mulmod(res,a,p);
-		a = mulmod(a,a,p);
+			res = mulmod(res, a, p);
+		a = mulmod(a, a, p);
 		n = n / 2;
 	}
 	return res;
@@ -839,16 +839,16 @@ static uint64_t power(uint64_t a, uint64_t n, uint64_t p)
 static uint64_t mulmod(uint64_t a, uint64_t b, uint64_t mod)
 {
 	uint64_t res = 0; // Initialize result
-    //a = a % mod;
+	//a = a % mod;
 
-    while (b > 0)
-    {
-        if (b % 2 == 1)
-            res = (res + a) % mod;
-        a = (a * 2) % mod;
-        b /= 2;
-    }
-    return res % mod;
+	while (b > 0)
+	{
+		if (b % 2 == 1)
+			res = (res + a) % mod;
+		a = (a * 2) % mod;
+		b /= 2;
+	}
+	return res % mod;
 }
 
 //gdc entre a y b
@@ -869,7 +869,7 @@ static uint64_t gcd(uint64_t a, uint64_t b)
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
-* 							-> FALSE (Numero no es primo)
+*                           -> FALSE (Numero no es primo)
 *=============================================================================*/
 
 static bool_t MethodFermat(primepro_t *primeProcess)

@@ -16,54 +16,56 @@
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 *=============================================================================*/
 
-void displayHome(primepro_t *primeProcess) {
+void displayHome(primepro_t *primeProcess)
+{
 
 	uint8_t mensajeMetodo[50];
 
 	//se genera el mensaje de metodo
-	switch (primeProcess -> method){
+	switch (primeProcess->method)
+	{
 	case BRUTE_FORCE_METHOD:
-		strcpy(mensajeMetodo,"BRUTE_FORCE_METHOD");
+		strcpy(mensajeMetodo, "BRUTE_FORCE_METHOD");
 		break;
 	case PAIR_LESS_METHOD:
-		strcpy(mensajeMetodo,"PAIR_LESS_METHOD");
+		strcpy(mensajeMetodo, "PAIR_LESS_METHOD");
 		break;
 	case SQRT_METHOD:
-		strcpy(mensajeMetodo,"SQRT_METHOD");
+		strcpy(mensajeMetodo, "SQRT_METHOD");
 		break;
 	case SQRT_6KPLUS1_METHOD:
-		strcpy(mensajeMetodo,"SQRT_6KPLUS1_METHOD");
+		strcpy(mensajeMetodo, "SQRT_6KPLUS1_METHOD");
 		break;
 	case SIEVE_OF_ERATOSTHENES_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_ERATOSTHENES_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_ERATOSTHENES_METHOD");
 		break;
 	case SIEVE_OF_EULER_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_EULER_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_EULER_METHOD");
 		break;
 	case SQRT_30K235_METHOD:
-		strcpy(mensajeMetodo,"SQRT_30K235_METHOD");
+		strcpy(mensajeMetodo, "SQRT_30K235_METHOD");
 		break;
 	case SQRT_210K2357_METHOD:
-		strcpy(mensajeMetodo,"SQRT_210K2357_METHOD");
-			break;
+		strcpy(mensajeMetodo, "SQRT_210K2357_METHOD");
+		break;
 	case SIEVE_OF_SUNDARAM_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_SUNDARAM_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_SUNDARAM_METHOD");
 		break;
 	case SIEVE_OF_ATKIN_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_ATKIN_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_ATKIN_METHOD");
 		break;
 	case FERMAT_METHOD:
-		strcpy(mensajeMetodo,"FERMAT_METHOD");
+		strcpy(mensajeMetodo, "FERMAT_METHOD");
 		break;
 	default:
 		break;
 	}
 
 	//se borra pantalla
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[2J" );   // Clear screen command
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[H"  );   // Cursor to home command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[2J"); // Clear screen command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[H");  // Cursor to home command
 	printf("|------------------------------------------------|\r\n");
 	printf("| Programa de detección de números primos        |\r\n");
 	printf("|------------------------------------------------|\r\n");
@@ -76,15 +78,15 @@ void displayHome(primepro_t *primeProcess) {
 	printf("| Presione R o TEC3 Para para ver el resultado.  |\r\n");
 	printf("| Presione P o TEC4 Para procesar                |\r\n");
 	printf("|------------------------------------------------|\r\n");
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[7A"  );  // Cursordos lineas arriba
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[7A"); // Cursordos lineas arriba
 	printf("| Metodo: ");
-	printf("%s",mensajeMetodo);
+	printf("%s", mensajeMetodo);
 	printf("\r\n");
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[3A"  );  // Cursordos lineas arriba
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[3A"); // Cursordos lineas arriba
 	printf("| Numero: ");
-	printf("%" PRIu64, primeProcess -> number);
+	printf("%" PRIu64, primeProcess->number);
 	printf("\r\n");
 }
 
@@ -93,12 +95,13 @@ void displayHome(primepro_t *primeProcess) {
 * de seleccion de metodo.
 *=============================================================================*/
 
-void displayMethod(void) {
+void displayMethod(void)
+{
 	//se borra pantalla
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[2J" );   // Clear screen command
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[H"  );   // Cursor to home command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[2J"); // Clear screen command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[H");  // Cursor to home command
 	printf("|------------------------------------------------|\r\n");
 	printf("| Seleccione un metodo de deteccion de primos    |\r\n");
 	printf("|------------------------------------------------|\r\n");
@@ -121,12 +124,13 @@ void displayMethod(void) {
 * de process.
 *=============================================================================*/
 
-void displayProcess(void) {
+void displayProcess(void)
+{
 	//se borra pantalla
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[2J" );   // Clear screen command
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[H"  );   // Cursor to home command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[2J"); // Clear screen command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[H");  // Cursor to home command
 	printf("|------------------------------------------------|\r\n");
 	printf("| Procesando                                     |\r\n");
 	printf("|------------------------------------------------|\r\n");
@@ -137,12 +141,13 @@ void displayProcess(void) {
 * de seleccion de numero.
 *=============================================================================*/
 
-void displayNumber(void) {
+void displayNumber(void)
+{
 	//se borra pantalla
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[2J" );   // Clear screen command
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[H"  );   // Cursor to home command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[2J"); // Clear screen command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[H");  // Cursor to home command
 	printf("|------------------------------------------------|\r\n");
 	printf("| El numero debe ser mayor o igual a 2           |\r\n");
 	printf("|------------------------------------------------|\r\n");
@@ -150,8 +155,8 @@ void displayNumber(void) {
 	printf("|------------------------------------------------|\r\n");
 	printf("| Luego presione cualquier tecla para ir al menu |\r\n");
 	printf("|------------------------------------------------|\r\n");
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[5A"  );  // Cursordos lineas arriba
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[5A"); // Cursordos lineas arriba
 	printf("|--------------------\n");
 }
 
@@ -162,76 +167,82 @@ void displayNumber(void) {
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 *=============================================================================*/
 
-void displayResult(primepro_t *primeProcess) {
+void displayResult(primepro_t *primeProcess)
+{
 
-	uint8_t 	mensajeMetodo[50],timeUnit[3];
-	uint16_t	timeQ,timeF;
+	uint8_t mensajeMetodo[50], timeUnit[3];
+	uint16_t timeQ, timeF;
 
 	//se genera el mensaje de metodo
-	switch (primeProcess -> method){
+	switch (primeProcess->method)
+	{
 	case BRUTE_FORCE_METHOD:
-		strcpy(mensajeMetodo,"BRUTE_FORCE_METHOD");
+		strcpy(mensajeMetodo, "BRUTE_FORCE_METHOD");
 		break;
 	case PAIR_LESS_METHOD:
-		strcpy(mensajeMetodo,"PAIR_LESS_METHOD");
+		strcpy(mensajeMetodo, "PAIR_LESS_METHOD");
 		break;
 	case SQRT_METHOD:
-		strcpy(mensajeMetodo,"SQRT_METHOD");
+		strcpy(mensajeMetodo, "SQRT_METHOD");
 		break;
 	case SQRT_6KPLUS1_METHOD:
-		strcpy(mensajeMetodo,"SQRT_6KPLUS1_METHOD");
+		strcpy(mensajeMetodo, "SQRT_6KPLUS1_METHOD");
 		break;
 	case SIEVE_OF_ERATOSTHENES_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_ERATOSTHENES_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_ERATOSTHENES_METHOD");
 		break;
 	case SIEVE_OF_EULER_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_EULER_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_EULER_METHOD");
 		break;
 	case SQRT_30K235_METHOD:
-		strcpy(mensajeMetodo,"SQRT_30K235_METHOD");
+		strcpy(mensajeMetodo, "SQRT_30K235_METHOD");
 		break;
 	case SQRT_210K2357_METHOD:
-		strcpy(mensajeMetodo,"SQRT_210K2357_METHOD");
+		strcpy(mensajeMetodo, "SQRT_210K2357_METHOD");
 		break;
 	case SIEVE_OF_SUNDARAM_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_SUNDARAM_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_SUNDARAM_METHOD");
 		break;
 	case SIEVE_OF_ATKIN_METHOD:
-		strcpy(mensajeMetodo,"SIEVE_OF_ATKIN_METHOD");
+		strcpy(mensajeMetodo, "SIEVE_OF_ATKIN_METHOD");
 		break;
 	case FERMAT_METHOD:
-		strcpy(mensajeMetodo,"FERMAT_METHOD");
+		strcpy(mensajeMetodo, "FERMAT_METHOD");
 		break;
 	default:
 		break;
 	}
 
 	// Calculo de tiempo en formato humano
-	if (primeProcess -> time >= 1000000000){
-		timeQ = primeProcess -> time / 1000000000;
-		timeF = (uint16_t) ((primeProcess -> time - timeQ*1000000000) / 10000000);
-		strcpy(timeUnit,"s");
+	if (primeProcess->time >= 1000000000)
+	{
+		timeQ = primeProcess->time / 1000000000;
+		timeF = (uint16_t)((primeProcess->time - timeQ * 1000000000) / 10000000);
+		strcpy(timeUnit, "s");
 	}
-	else if (primeProcess -> time >= 1000000){
-		timeQ = primeProcess -> time / 1000000;
-		timeF = (uint16_t) ((primeProcess -> time - timeQ*1000000) / 10000);
-		strcpy(timeUnit,"ms");
+	else if (primeProcess->time >= 1000000)
+	{
+		timeQ = primeProcess->time / 1000000;
+		timeF = (uint16_t)((primeProcess->time - timeQ * 1000000) / 10000);
+		strcpy(timeUnit, "ms");
 	}
-	else if (primeProcess -> time >= 1000){
-		timeQ = primeProcess -> time / 1000;
-		(uint16_t) ((primeProcess -> time - timeQ*1000) / 10);
-		strcpy(timeUnit,"us");
+	else if (primeProcess->time >= 1000)
+	{
+		timeQ = primeProcess->time / 1000;
+		(uint16_t)((primeProcess->time - timeQ * 1000) / 10);
+		strcpy(timeUnit, "us");
 	}
-	else{
-		timeQ = primeProcess -> time;
+	else
+	{
+		timeQ = primeProcess->time;
 		timeF = 0;
-		strcpy(timeUnit,"ns");
+		strcpy(timeUnit, "ns");
 	}
 	//se borra pantalla
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[2J" );   // Clear screen command
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[H"  );   // Cursor to home command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[2J"); // Clear screen command
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[H");  // Cursor to home command
 	printf("|------------------------------------------------|\r\n");
 	printf("| Numero:                                        |\r\n");
 	printf("|------------------------------------------------|\r\n");
@@ -247,40 +258,47 @@ void displayResult(primepro_t *primeProcess) {
 	printf("|------------------------------------------------|\r\n");
 	printf("| Presione cualquier tecla para volver al menu   |\r\n");
 	printf("|------------------------------------------------|\r\n");
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[4A"  );  // Cursordos lineas arriba
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[4A"); // Cursordos lineas arriba
 	printf("| Memoria: ");
-	printf("%" PRIu64, primeProcess -> memory);
+	printf("%" PRIu64, primeProcess->memory);
 	printf(" Bytes");
-	if (primeProcess -> memoryOV) printf(" OverFlow\r\n");
-	else printf("\r\n");
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[3A"  );  // Cursordos lineas arriba
+	if (primeProcess->memoryOV)
+		printf(" OverFlow\r\n");
+	else
+		printf("\r\n");
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[3A"); // Cursordos lineas arriba
 	printf("| Metodo: ");
-	printf("%s",mensajeMetodo);
+	printf("%s", mensajeMetodo);
 	printf("\r\n");
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[3A"  );  // Cursordos lineas arriba
-	printf("| Tiempo: %d.%d %s\r\n",timeQ,timeF,timeUnit);
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[3A"  );  // Cursordos lineas arriba
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[3A"); // Cursordos lineas arriba
+	printf("| Tiempo: %d.%d %s\r\n", timeQ, timeF, timeUnit);
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[3A"); // Cursordos lineas arriba
 	printf("| Divisor: ");
-	printf("%" PRIu64, primeProcess -> divider);
+	printf("%" PRIu64, primeProcess->divider);
 	printf("\r\n");
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[3A"  );  // Cursordos lineas arriba
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[3A"); // Cursordos lineas arriba
 	printf("| Resultado: ");
-	if (primeProcess -> memoryOV){
-		if (!(primeProcess -> result)) printf("no es primo\r\n");
-		else printf("Numero grande para el metodo\r\n");
+	if (primeProcess->memoryOV)
+	{
+		if (!(primeProcess->result))
+			printf("no es primo\r\n");
+		else
+			printf("Numero grande para el metodo\r\n");
 	}
-	else {
-		if (!(primeProcess -> result)) printf("no ");
+	else
+	{
+		if (!(primeProcess->result))
+			printf("no ");
 		printf("es primo\r\n");
 	}
-	uartWriteByte(   UART_USB, 27    );   // ESC command
-	uartWriteString( UART_USB, "[3A"  );  // Cursordos lineas arriba
+	uartWriteByte(UART_USB, 27);	  // ESC command
+	uartWriteString(UART_USB, "[3A"); // Cursordos lineas arriba
 	printf("| Numero: ");
-	printf("%" PRIu64, primeProcess -> number);
+	printf("%" PRIu64, primeProcess->number);
 	printf("\r\n");
 }
