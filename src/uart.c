@@ -206,6 +206,7 @@ void displayResult(primepro_t *primeProcess) {
 		break;
 	}
 
+	// Calculo de tiempo en formato humano
 	if (primeProcess -> time >= 1000000000){
 		timeQ = primeProcess -> time / 1000000000;
 		timeF = (uint16_t) ((primeProcess -> time - timeQ*1000000000) / 10000000);

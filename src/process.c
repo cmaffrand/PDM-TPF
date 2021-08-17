@@ -848,8 +848,8 @@ static uint64_t gcd(uint64_t a, uint64_t b)
 
 /*=============================================================================
 * Funcion: MethodFermat -> Metodo de chequeo de primariedad probabilistico,
-* Si dice que es primo hay altas probabilidades de que lo sea, si dice que no
-* es primo puede que sea un numero de Carmichael.
+* Si dice que es primo hay altas probabilidades de que lo sea salvo que estemos
+* ante un numero de Carmichael.
 * Parametros de Entrada: 
 * primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
 * Valor de retorno:	ret_val -> TRUE (Numero es primo)
