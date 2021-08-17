@@ -53,13 +53,18 @@ int main(void)
 		// 817504243
 		// 838041641 // Máximo primo para método 0
 		// 982451653
+		// 4294967291
+		// 4294967311
+		// 8589934609
 		// 1500000001
 		// 3333323333 primo maximo para metodos 5 y 6. Memoria.
 		// 10000600009 100003*100003
 		// 100123456789
 		// 1000000000039
 		// 999998727899999
-		// 18446744069414584321 // Primo más grande que se puede ingresar en un uint64_t
+		// 9223372036854775783 // Primero menor que 2^63
+		// 18446744069414584321
+		// 18446744073709551557 // Primo más grande que se puede ingresar en un uint64_t
 	}
 
 	return 0;

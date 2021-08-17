@@ -822,17 +822,33 @@ static bool_t MethodAtkin(primepro_t *primeProcess)
 // Calcula (a^n)%p sin utilizar POW
 static uint64_t power(uint64_t a, uint64_t n, uint64_t p)
 {
-	uint32_t res = 1; // Inicializa el resultado
-	a = a % p;
+	uint64_t res = 1; // Inicializa el resultado
+	//a = a % p;
 
 	while (n > 0)
 	{
-		if (n & 1)
-			res = (res * a) % p;
-		n = n >> 1;
-		a = (a * a) % p;
+		if (n % 2 == 1)
+			res = mulmod(res,a,p);
+		a = mulmod(a,a,p);
+		n = n / 2;
 	}
 	return res;
+}
+
+// To compute (a * b) % mod
+static uint64_t mulmod(uint64_t a, uint64_t b, uint64_t mod)
+{
+	uint64_t res = 0; // Initialize result
+    //a = a % mod;
+
+    while (b > 0)
+    {
+        if (b % 2 == 1)
+            res = (res + a) % mod;
+        a = (a * 2) % mod;
+        b /= 2;
+    }
+    return res % mod;
 }
 
 //gdc entre a y b

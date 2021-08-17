@@ -45,6 +45,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 		{
 			menu->state = NUMBER_STATE;
 			primeProcess->number = 0;
+			i = 0;
 			displayNumber();
 			newData = FALSE;
 		}
@@ -84,6 +85,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 		{
 			menu->state = NUMBER_STATE;
 			primeProcess->number = 0;
+			i = 0;
 			displayNumber();
 		}
 		break;
@@ -111,7 +113,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 				primeProcess->method = SIEVE_OF_SUNDARAM_METHOD;
 			else if (dataRead == '0')
 				primeProcess->method = SIEVE_OF_ATKIN_METHOD;
-			else if (dataRead == 'a')
+			else if ((dataRead == 'a') || (dataRead == 'A'))
 				primeProcess->method = FERMAT_METHOD;
 			menu->state = HOME_STATE;
 			displayHome(primeProcess);
@@ -134,16 +136,14 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			{
 				menu->state = HOME_STATE;
 				displayHome(primeProcess);
-				i = 0;
 			}
 			newData = FALSE;
 			// Si el dato ya tiene 20 digitos se vuelve al home.
 			// (máximo entero representable por un uint64_t)
-			if (i == MAX_DIGIT)
+			if (i == MAX_DIGIT-1)
 			{
 				menu->state = HOME_STATE;
 				displayHome(primeProcess);
-				i = 0;
 			}
 			else
 				i++;
@@ -153,7 +153,6 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 		{
 			menu->state = HOME_STATE;
 			displayHome(primeProcess);
-			i = 0;
 		}
 		break;
 	case RESULT_STATE:
