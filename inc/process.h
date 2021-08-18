@@ -75,7 +75,7 @@ extern "C"
 	static bool_t MethodFermat(primepro_t *primeProcess);
 	static bool_t mrTest(uint64_t d, uint64_t n);
 	static bool_t MethodMillerRabin(primepro_t *primeProcess);
-	static int64_t calculateJacobian(int64_t a,int64_t n);
+	static int64_t calculateJacobian(int64_t a, int64_t n);
 	static bool_t MethodSolovayStrassen(primepro_t *primeProcess);
 
 	/*=====[Prototypes (declarations) of public interrupt functions]=============*/

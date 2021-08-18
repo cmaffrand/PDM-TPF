@@ -833,16 +833,18 @@ static uint64_t power(uint64_t a, uint64_t n, uint64_t p)
 	uint64_t res = 1; // Inicializa el resultado
 	//a = a % p;
 
-	if (p < UINT32_MAX) {
+	if (p < UINT32_MAX)
+	{
 		while (n > 0)
 		{
 			if (n % 2 == 1)
-				res = (res* a) % p;
-			a = (a* a) % p;
+				res = (res * a) % p;
+			a = (a * a) % p;
 			n = n / 2;
 		}
 	}
-	else {
+	else
+	{
 		while (n > 0)
 		{
 			if (n % 2 == 1)
@@ -851,7 +853,6 @@ static uint64_t power(uint64_t a, uint64_t n, uint64_t p)
 			n = n / 2;
 		}
 	}
-
 
 	return res;
 }
@@ -904,7 +905,7 @@ static bool_t MethodFermat(primepro_t *primeProcess)
 		 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157,
 		 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251};
 
-	primeProcess->memory = sizeof(primepro_t) + 2*sizeof(uint8_t) + sizeof(uint64_t) + sizeof(prime);
+	primeProcess->memory = sizeof(primepro_t) + 2 * sizeof(uint8_t) + sizeof(uint64_t) + sizeof(prime);
 	primeProcess->result = FALSE;
 	primeProcess->memoryOV = FALSE;
 	primeProcess->divider = 0;
@@ -950,21 +951,23 @@ static bool_t MethodFermat(primepro_t *primeProcess)
 // Teorema de Miller Rabin
 static bool_t mrTest(uint64_t d, uint64_t n)
 {
-    uint64_t a = 2 + rand() % (n - 4); // valor random
-    uint64_t x = power(a, d, n); //a^d % n
+	uint64_t a = 2 + rand() % (n - 4); // valor random
+	uint64_t x = power(a, d, n);	   //a^d % n
 
-    if (x == 1 || x == n-1)
-       return TRUE; // Posible primo
+	if (x == 1 || x == n - 1)
+		return TRUE; // Posible primo
 
-    // Miller Rabin Theorem
-    while (d != n-1)
-    {
-        x = mulmod(x,x,n);
-        d *= 2;
-        if (x == 1)      return FALSE; // Compuesto
-        if (x == n-1)    return TRUE;  // Posible primo
-    }
-    return FALSE; // Compuesto
+	// Miller Rabin Theorem
+	while (d != n - 1)
+	{
+		x = mulmod(x, x, n);
+		d *= 2;
+		if (x == 1)
+			return FALSE; // Compuesto
+		if (x == n - 1)
+			return TRUE; // Posible primo
+	}
+	return FALSE; // Compuesto
 }
 
 /*=============================================================================
@@ -980,17 +983,17 @@ static bool_t MethodMillerRabin(primepro_t *primeProcess)
 {
 	uint8_t k = 10;
 	uint8_t i;
-	uint64_t d = primeProcess->number-1;
+	uint64_t d = primeProcess->number - 1;
 
 	uint8_t prime[] =
 		{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
 		 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157,
 		 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251};
 
-	primeProcess->memory 	= sizeof(primepro_t) + 2*sizeof(uint8_t) + sizeof(uint64_t) + sizeof(prime);
-	primeProcess->result 	= FALSE;
-	primeProcess->memoryOV 	= FALSE;
-	primeProcess->divider 	= 0;
+	primeProcess->memory = sizeof(primepro_t) + 2 * sizeof(uint8_t) + sizeof(uint64_t) + sizeof(prime);
+	primeProcess->result = FALSE;
+	primeProcess->memoryOV = FALSE;
+	primeProcess->divider = 0;
 
 	setTime(0);
 	// Itera chequeando si es multiplo de los primos menores a 256
@@ -1007,12 +1010,13 @@ static bool_t MethodMillerRabin(primepro_t *primeProcess)
 
 	// Se busca que d sea impar
 	while (d % 2 == 0)
-			d /= 2;
+		d /= 2;
 
 	// itera k veces subir el k para bajar probabilidad de falso positivo.
 	while (k > 0)
 	{
-		if (!mrTest(d,primeProcess->number)) {
+		if (!mrTest(d, primeProcess->number))
+		{
 			getTime(primeProcess);
 			return primeProcess->result;
 		}
@@ -1024,50 +1028,50 @@ static bool_t MethodMillerRabin(primepro_t *primeProcess)
 }
 
 //calcula Jacobiano(a/n) n>0 y es impar
-static int64_t calculateJacobian(int64_t a,int64_t n)
+static int64_t calculateJacobian(int64_t a, int64_t n)
 {
 	int64_t ans = 1;
 	int64_t aux;
 
 	if (!a)
-       return 0;
+		return 0;
 
-   if (a < 0)
-   {
-       a = -a;
-       if (n % 4 == 3)
-           ans=-ans;
-   }
-   if (a == 1)
-       return ans;
-   while (a)
-   {
-       if (a < 0)
-       {
-           a = -a;
-           if (n % 4 == 3)
-               ans = -ans;
-       }
-       while (a % 2 == 0)
-       {
-           a = a / 2;
-           if (n % 8 == 3 || n % 8 == 5)
-               ans = -ans;
-       }
-       // Intercambia a con n
-       aux = a;
-       a = n;
-       n = aux;
+	if (a < 0)
+	{
+		a = -a;
+		if (n % 4 == 3)
+			ans = -ans;
+	}
+	if (a == 1)
+		return ans;
+	while (a)
+	{
+		if (a < 0)
+		{
+			a = -a;
+			if (n % 4 == 3)
+				ans = -ans;
+		}
+		while (a % 2 == 0)
+		{
+			a = a / 2;
+			if (n % 8 == 3 || n % 8 == 5)
+				ans = -ans;
+		}
+		// Intercambia a con n
+		aux = a;
+		a = n;
+		n = aux;
 
-       if (a % 4 == 3 && n % 4 == 3)
-           ans = -ans;
-       a = a % n;
-       if (a > n / 2)
-           a = a - n;
-   }
-   if (n == 1)
-       return ans;
-   return 0;
+		if (a % 4 == 3 && n % 4 == 3)
+			ans = -ans;
+		a = a % n;
+		if (a > n / 2)
+			a = a - n;
+	}
+	if (n == 1)
+		return ans;
+	return 0;
 }
 
 /*=============================================================================
@@ -1083,17 +1087,17 @@ static bool_t MethodSolovayStrassen(primepro_t *primeProcess)
 {
 	uint8_t k = 100;
 	uint8_t i;
-	int64_t a,mod,jacobian;
+	int64_t a, mod, jacobian;
 
 	uint8_t prime[] =
 		{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
 		 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157,
 		 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251};
 
-	primeProcess->memory 	= sizeof(primepro_t) + 2*sizeof(uint8_t) + 3*sizeof(int64_t) + sizeof(prime);
-	primeProcess->result 	= FALSE;
-	primeProcess->memoryOV 	= FALSE;
-	primeProcess->divider 	= 0;
+	primeProcess->memory = sizeof(primepro_t) + 2 * sizeof(uint8_t) + 3 * sizeof(int64_t) + sizeof(prime);
+	primeProcess->result = FALSE;
+	primeProcess->memoryOV = FALSE;
+	primeProcess->divider = 0;
 
 	setTime(0);
 	// Itera chequeando si es multiplo de los primos menores a 256
@@ -1125,5 +1129,3 @@ static bool_t MethodSolovayStrassen(primepro_t *primeProcess)
 	primeProcess->divider = primeProcess->number;
 	return primeProcess->result = TRUE;
 }
-
-
