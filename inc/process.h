@@ -41,6 +41,8 @@ extern "C"
 		SIEVE_OF_SUNDARAM_METHOD,
 		SIEVE_OF_ATKIN_METHOD,
 		FERMAT_METHOD,
+		MILLER_RABIN_METHOD,
+		SOLOWAY_STRSSEN_METHOD,
 	} mtd_t;
 
 	typedef struct
@@ -71,6 +73,10 @@ extern "C"
 	static uint64_t mulmod(uint64_t a, uint64_t b, uint64_t mod);
 	static uint64_t gcd(uint64_t a, uint64_t b);
 	static bool_t MethodFermat(primepro_t *primeProcess);
+	static bool_t mrTest(uint64_t d, uint64_t n);
+	static bool_t MethodMillerRabin(primepro_t *primeProcess);
+	static int64_t calculateJacobian(int64_t a,int64_t n);
+	static bool_t MethodSolovayStrassen(primepro_t *primeProcess);
 
 	/*=====[Prototypes (declarations) of public interrupt functions]=============*/
 

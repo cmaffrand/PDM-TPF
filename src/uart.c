@@ -57,6 +57,12 @@ void displayHome(primepro_t *primeProcess)
 	case FERMAT_METHOD:
 		strcpy(mensajeMetodo, "FERMAT_METHOD");
 		break;
+	case MILLER_RABIN_METHOD:
+		strcpy(mensajeMetodo, "MILLER_RABIN_METHOD");
+		break;
+	case SOLOWAY_STRSSEN_METHOD:
+		strcpy(mensajeMetodo, "SOLOWAY_STRSSEN_METHOD");
+		break;
 	default:
 		break;
 	}
@@ -115,7 +121,9 @@ void displayMethod(void)
 	printf("| Presione 8 SQRT_210K2357_METHOD                |\r\n");
 	printf("| Presione 9 SIEVE_OF_SUNDARAM_METHOD            |\r\n");
 	printf("| Presione 0 SIEVE_OF_ATKIN_METHOD               |\r\n");
-	printf("| Presione a FERMAT_METHOD                       |\r\n");
+	printf("| Presione A FERMAT_METHOD                       |\r\n");
+	printf("| Presione B MILLER_RABIN_METHOD                 |\r\n");
+	printf("| Presione C SOLOWAY_STRSSEN_METHOD              |\r\n");
 	printf("|------------------------------------------------|\r\n");
 }
 
@@ -208,6 +216,12 @@ void displayResult(primepro_t *primeProcess)
 		break;
 	case FERMAT_METHOD:
 		strcpy(mensajeMetodo, "FERMAT_METHOD");
+		break;
+	case MILLER_RABIN_METHOD:
+		strcpy(mensajeMetodo, "MILLER_RABIN_METHOD");
+		break;
+	case SOLOWAY_STRSSEN_METHOD:
+		strcpy(mensajeMetodo, "SOLOWAY_STRSSEN_METHOD");
 		break;
 	default:
 		break;

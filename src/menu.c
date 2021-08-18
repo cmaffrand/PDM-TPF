@@ -115,6 +115,10 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 				primeProcess->method = SIEVE_OF_ATKIN_METHOD;
 			else if ((dataRead == 'a') || (dataRead == 'A'))
 				primeProcess->method = FERMAT_METHOD;
+			else if ((dataRead == 'b') || (dataRead == 'B'))
+				primeProcess->method = MILLER_RABIN_METHOD;
+			else if ((dataRead == 'c') || (dataRead == 'C'))
+				primeProcess->method = SOLOWAY_STRSSEN_METHOD;
 			menu->state = HOME_STATE;
 			displayHome(primeProcess);
 		}
