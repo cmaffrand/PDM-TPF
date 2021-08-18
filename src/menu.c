@@ -118,7 +118,7 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 			else if ((dataRead == 'b') || (dataRead == 'B'))
 				primeProcess->method = MILLER_RABIN_METHOD;
 			else if ((dataRead == 'c') || (dataRead == 'C'))
-				primeProcess->method = SOLOWAY_STRSSEN_METHOD;
+				primeProcess->method = SOLOVAY_STRASSEN_METHOD;
 			menu->state = HOME_STATE;
 			displayHome(primeProcess);
 		}

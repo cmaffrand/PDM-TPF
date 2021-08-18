@@ -67,7 +67,7 @@ bool_t process(primepro_t *primeProcess)
 		case MILLER_RABIN_METHOD:
 			ret_val = MethodMillerRabin(primeProcess);
 			break;
-		case SOLOWAY_STRSSEN_METHOD:
+		case SOLOVAY_STRASSEN_METHOD:
 			ret_val = MethodSolovayStrassen(primeProcess);
 			break;
 		default:
