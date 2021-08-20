@@ -54,6 +54,7 @@ Probables mejoras que se le pueden realizar al código:
 - Calcluar el tiempo de procesamiento de manera diferente, dado que en el implementado se usa el sysTick y se puede contar hasta 2^32-1, lo cual da un tiempo máximo de 21 segundos.
 - Se podría implementar un modo de uso que ejecute todos los metodos para un mismo número y de ese modo comparar los resultados.
 - Se pueden explorar otros métodos.
+- Implementaciones segmentadas de los metodos de SIEVE para reducir el uso de memoria y poder ampliar su uso.
 
 Conclusión:
 
