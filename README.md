@@ -41,3 +41,10 @@ Los algortimos implementados son:
 - Probabilsitico basado en el Fermat’s Little Theorem, para evitar falsos positivos y subir la fiabilidad se usa divisibilidad por primos entre 2 y 251 como complemento.
 - Probabilsitico basado en el algortimo de Miller-Rabin, para evitar falsos positivos y subir la fiabilidad se usa divisibilidad por primos entre 2 y 251 como complemento.
 - Probabilsitico basado en el algortimo de Solovay-Strassen, para evitar falsos positivos y subir la fiabilidad se usa divisibilidad por primos entre 2 y 251 como complemento.
+- Probabilsitico basado en el algortimo de Lehmann, para evitar falsos positivos y subir la fiabilidad se usa divisibilidad por primos entre 2 y 251 como complemento.
+- Deterministico basado en el argoritmo de Wilson, el mismo sae centra en el calculo del factorial, es muy lento.
+
+Se exploraron otros metodos determinisiticos:
+- Lucas: muy costoso computacionalmente proque hay que calcular todos los factores primos de n-1. Lo que lleva mucho tiempo.
+- AKS: muy costoso computacionalmente proque hay que calcular un vector de coeficientes de largo n. Lo que hace que have que en la EDU-CIAA no se pued calcular más que aproximadamente hasta 20k.
+- Vantieghems: muy costoso computacionalmente proque hay que calcular (2^n)-1, lo que hace que el metodo sirva solo hasta n = 64.
