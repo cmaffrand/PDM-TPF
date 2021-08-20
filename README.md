@@ -48,3 +48,9 @@ Se exploraron otros metodos determinisiticos:
 - Lucas: muy costoso computacionalmente proque hay que calcular todos los factores primos de n-1. Lo que lleva mucho tiempo.
 - AKS: muy costoso computacionalmente proque hay que calcular un vector de coeficientes de largo n. Lo que hace que have que en la EDU-CIAA no se pued calcular más que aproximadamente hasta 20k.
 - Vantieghems: muy costoso computacionalmente proque hay que calcular (2^n)-1, lo que hace que el metodo sirva solo hasta n = 64.
+
+Probables mejoras que se le pueden realizar al código:
+- Generar una forma de escape del procesamiento (cancelarlo), ahora hay que esperar que termine.
+- Calcluar el tiempo de procesamiento de manera diferente, dado que en el implementado se usa el sysTick y se puede contar hasta 2^32-1, lo cual da un tiempo máximo de 21 segundos.
+- Se podría implementar un modo de uso que ejecute todos los metodos para un mismo número y de ese modo comparar los resultados.
+- Se pueden explorar otros métodos.
