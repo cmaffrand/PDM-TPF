@@ -54,3 +54,7 @@ Probables mejoras que se le pueden realizar al código:
 - Calcluar el tiempo de procesamiento de manera diferente, dado que en el implementado se usa el sysTick y se puede contar hasta 2^32-1, lo cual da un tiempo máximo de 21 segundos.
 - Se podría implementar un modo de uso que ejecute todos los metodos para un mismo número y de ese modo comparar los resultados.
 - Se pueden explorar otros métodos.
+
+Conclusión:
+
+Se concluye que el mejor metodo para implementar en este micro controlador, con la memoria que se dispone y es el metodo de Miller-Rabin ayudado con un divisibilidad de numeros primos menores que 251. Con el mismo se pueden detectar números primos menores a 2^63 con total certeza, con un uso de memoria de 112 Bytes y con tiempos de procesamiento de menores de 92 ms para numeros del orden de 2^63 (10^18). 
