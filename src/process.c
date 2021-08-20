@@ -70,6 +70,12 @@ bool_t process(primepro_t *primeProcess)
 		case SOLOVAY_STRASSEN_METHOD:
 			ret_val = MethodSolovayStrassen(primeProcess);
 			break;
+		case LEHMANN_METHOD:
+			ret_val = MethodLehmann(primeProcess);
+			break;
+		case WILSON_METHOD:
+			ret_val = MethodWilson(primeProcess);
+			break;
 		default:
 			break;
 		}
@@ -1120,6 +1126,120 @@ static bool_t MethodSolovayStrassen(primepro_t *primeProcess)
 		jacobian = (primeProcess->number + calculateJacobian(a, primeProcess->number)) % primeProcess->number;
 		mod = power(a, (primeProcess->number - 1) / 2, primeProcess->number);
 		if (!jacobian || mod != jacobian)
+		{
+			getTime(primeProcess);
+			return primeProcess->result;
+		}
+	}
+	getTime(primeProcess);
+	primeProcess->divider = primeProcess->number;
+	return primeProcess->result = TRUE;
+}
+
+/*=============================================================================
+* Funcion: MethodLehmann -> Metodo de chequeo de primariedad probabilistico,
+* Si dice que es primo hay altas probabilidades de que lo sea
+* Parametros de Entrada:
+* primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
+* Valor de retorno:	ret_val -> TRUE (Numero es primo)
+*                           -> FALSE (Numero no es primo)
+*=============================================================================*/
+
+static bool_t MethodLehmann(primepro_t *primeProcess)
+{
+	uint8_t k = 10;
+	uint8_t i;
+	uint64_t a,e,r;
+
+	uint8_t prime[] =
+		{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
+		 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157,
+		 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251};
+
+	primeProcess->memory = sizeof(primepro_t) + 2 * sizeof(uint8_t) + 3*sizeof(uint64_t) + sizeof(prime);
+	primeProcess->result = FALSE;
+	primeProcess->memoryOV = FALSE;
+	primeProcess->divider = 0;
+
+	setTime(0);
+	// Itera chequeando si es multiplo de los primos menores a 256
+	// Para minimizar los falsos primos (Carmichael)
+	for (i = 0; i < sizeof(prime) / sizeof(uint8_t); i++)
+	{
+		if (primeProcess->number % prime[i] == 0)
+		{
+			getTime(primeProcess);
+			primeProcess->divider = prime[i];
+			return primeProcess->result;
+		}
+	}
+
+	// numero aleatorio menor que n
+	a = 2 + (rand() % (primeProcess->number - 1));
+	// Calcula exponente
+	e = (primeProcess->number - 1) / 2;
+	// Itera k veces para disminuir la probabilidad de falso primo.
+	while(k > 0)
+	{
+		// resuleve r = a^e%n
+		r = power(a, e, primeProcess->number);
+		//if not equal, try for different base
+		if((r % primeProcess->number) == 1 || (r % primeProcess->number) == (primeProcess->number - 1))
+		{
+			a = 2 + (rand() % (primeProcess->number - 1));
+			k--;
+		}
+		else
+		{
+			getTime(primeProcess);
+			return primeProcess->result;
+		}
+	}
+	getTime(primeProcess);
+	primeProcess->divider = primeProcess->number;
+	return primeProcess->result = TRUE;
+}
+
+/*=============================================================================
+* Funcion: MethodWilson -> Metodo de chequeo de primariedad deterministico, usa
+* factorial y es lento.
+* Parametros de Entrada:
+* primepro_t *primeProcess -> Puntero a estructura de procesamiento "process.h".
+* Valor de retorno:	ret_val -> TRUE (Numero es primo)
+*                           -> FALSE (Numero no es primo)
+*=============================================================================*/
+
+static bool_t MethodWilson(primepro_t *primeProcess)
+{
+
+	uint64_t i,r = 1;
+
+	primeProcess->memory = sizeof(primepro_t) + sizeof(uint64_t);
+	primeProcess->result = FALSE;
+	primeProcess->memoryOV = FALSE;
+	primeProcess->divider = 0;
+
+	setTime(0);
+	// Chequea si es dos o tres
+	if ((primeProcess->number == 2) || (primeProcess->number == 3))
+	{
+		getTime(primeProcess);
+		primeProcess->divider = primeProcess->number;
+		return primeProcess->result = TRUE;
+	}
+	// Chequea si es cuatro
+	if (primeProcess->number == 4)
+	{
+		getTime(primeProcess);
+		primeProcess->divider = 2;
+		return primeProcess->result;
+	}
+	// Itera hasta numero - 1.
+	for (i = 1; i <= primeProcess->number-1; i++)
+	{
+		// implementacion con multiplicación modular
+		r = mulmod(r,i,primeProcess->number);
+		if (r == 0)
 		{
 			getTime(primeProcess);
 			return primeProcess->result;

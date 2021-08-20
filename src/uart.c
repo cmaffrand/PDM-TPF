@@ -63,6 +63,12 @@ void displayHome(primepro_t *primeProcess)
 	case SOLOVAY_STRASSEN_METHOD:
 		strcpy(mensajeMetodo, "SOLOVAY_STRASSEN_METHOD");
 		break;
+	case LEHMANN_METHOD:
+		strcpy(mensajeMetodo, "LEHMANN_METHOD");
+		break;
+	case WILSON_METHOD:
+		strcpy(mensajeMetodo, "WILSON_METHOD");
+		break;
 	default:
 		break;
 	}
@@ -124,6 +130,8 @@ void displayMethod(void)
 	printf("| Presione A FERMAT_METHOD                       |\r\n");
 	printf("| Presione B MILLER_RABIN_METHOD                 |\r\n");
 	printf("| Presione C SOLOVAY_STRASSEN_METHOD             |\r\n");
+	printf("| Presione D LEHMANN_METHOD                      |\r\n");
+	printf("| Presione E WILSON_METHOD                       |\r\n");
 	printf("|------------------------------------------------|\r\n");
 }
 
@@ -222,6 +230,12 @@ void displayResult(primepro_t *primeProcess)
 		break;
 	case SOLOVAY_STRASSEN_METHOD:
 		strcpy(mensajeMetodo, "SOLOVAY_STRASSEN_METHOD");
+		break;
+	case LEHMANN_METHOD:
+		strcpy(mensajeMetodo, "LEHMANN_METHOD");
+		break;
+	case WILSON_METHOD:
+		strcpy(mensajeMetodo, "WILSON_METHOD");
 		break;
 	default:
 		break;

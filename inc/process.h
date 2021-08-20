@@ -43,6 +43,8 @@ extern "C"
 		FERMAT_METHOD,
 		MILLER_RABIN_METHOD,
 		SOLOVAY_STRASSEN_METHOD,
+		LEHMANN_METHOD,
+		WILSON_METHOD,
 	} mtd_t;
 
 	typedef struct
@@ -77,6 +79,8 @@ extern "C"
 	static bool_t MethodMillerRabin(primepro_t *primeProcess);
 	static int64_t calculateJacobian(int64_t a, int64_t n);
 	static bool_t MethodSolovayStrassen(primepro_t *primeProcess);
+	static bool_t MethodLehmann(primepro_t *primeProcess);
+	static bool_t MethodWilson(primepro_t *primeProcess);
 
 	/*=====[Prototypes (declarations) of public interrupt functions]=============*/
 

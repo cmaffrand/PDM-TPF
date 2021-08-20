@@ -119,6 +119,10 @@ void MenuMEF(primepro_t *primeProcess, menu_t *menu)
 				primeProcess->method = MILLER_RABIN_METHOD;
 			else if ((dataRead == 'c') || (dataRead == 'C'))
 				primeProcess->method = SOLOVAY_STRASSEN_METHOD;
+			else if ((dataRead == 'd') || (dataRead == 'D'))
+				primeProcess->method = LEHMANN_METHOD;
+			else if ((dataRead == 'e') || (dataRead == 'E'))
+				primeProcess->method = WILSON_METHOD;
 			menu->state = HOME_STATE;
 			displayHome(primeProcess);
 		}
